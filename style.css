@@ -64,8 +64,7 @@ a {
   right: 0;
   bottom: 0;
 
-  /* fade mais longo e suave */
-  height: 210px;
+  height: 240px;
 
   z-index: 1;
   pointer-events: none;
@@ -73,11 +72,12 @@ a {
   background: linear-gradient(
     to bottom,
     rgba(255,255,255,0) 0%,
-    rgba(255,255,255,.02) 28%,
-    rgba(255,255,255,.08) 48%,
-    rgba(255,255,255,.20) 65%,
-    rgba(255,255,255,.42) 80%,
-    rgba(255,255,255,.72) 91%,
+    rgba(255,255,255,0.005) 20%,
+    rgba(255,255,255,0.02) 38%,
+    rgba(255,255,255,0.06) 56%,
+    rgba(255,255,255,0.14) 72%,
+    rgba(255,255,255,0.32) 86%,
+    rgba(255,255,255,0.62) 95%,
     #fff 100%
   );
 }
