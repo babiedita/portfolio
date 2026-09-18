@@ -3,9 +3,9 @@ const videos = [
     id: 1,
     type: "curto",
     home: true,
-    title: "Matando 20 e perdendo",
-    subtitle: "mercafatal",
-    youtube: "COLE_AQUI_O_LINK_DO_YOUTUBE_1"
+    title: "A MELHOR IA DO MUNDO!",
+    subtitle: "dev.pedroca",
+    youtube: "https://youtube.com/shorts/_DPBiqax3RI?feature=share"
   },
   {
     id: 2,
@@ -51,9 +51,9 @@ const videos = [
     id: 7,
     type: "longo",
     home: true,
-    title: "Vídeo Longform 01",
-    subtitle: "cliente",
-    youtube: "COLE_AQUI_O_LINK_DO_YOUTUBE_7"
+    title: "MATEI 20 e PERDI de JETT!",
+    subtitle: "marcafatal",
+    youtube: "https://www.youtube.com/watch?v=b_JcHN8aElA"
   },
   {
     id: 8,
