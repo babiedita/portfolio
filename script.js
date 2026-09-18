@@ -42,12 +42,12 @@ const videos = [
     type: "curto",
     home: true,
 
-    title: "Minha FADE tá CLUTCHZERA!",
-    subtitle: "bombazero",
+    title: "A MELHOR IA!",
+    subtitle: "dev.pedroca",
 
     thumb: "video2.png",
 
-    youtube: "COLE_AQUI_O_LINK_DO_YOUTUBE_2"
+    youtube: "https://youtube.com/shorts/_DPBiqax3RI?feature=share"
   },
 
   {
@@ -107,12 +107,12 @@ const videos = [
     type: "longo",
     home: true,
 
-    title: "Vídeo Longform 01",
-    subtitle: "cliente",
+    title: "MATEI 20 e PERDI de JETT!",
+    subtitle: "marcafatal",
 
     thumb: "video7.png",
 
-    youtube: "COLE_AQUI_O_LINK_DO_YOUTUBE_7"
+    youtube: "https://youtu.be/b_JcHN8aElA?si=D6FVOP-sYIk6darG"
   },
 
   {
