@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>Babi Edita</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/ndv3lae.css">
+  <link rel="stylesheet" href="style.css?v=100">
+</head>
+<body data-page="home">
+
+  <header class="hero" id="topo">
+    <nav class="menu" aria-label="Navegação principal">
+      <a href="#trabalho">trabalho</a>
+      <a href="#clientes">clientes</a>
+      <a href="#contato">contato</a>
+      <a href="parcerias.html">parcerias</a>
+      <a href="tutoriais.html">tutoriais</a>
+    </nav>
+
+    <div class="hero-content">
+      <img class="hero-logo" src="babi.png" alt="Babi Edita">
+      <p class="hero-subtitle">editora de vídeo.</p>
+      <a class="hero-cta" href="#trabalho">conferir</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="work-section" id="trabalho">
+      <div class="filter-wrap">
+        <p class="filter-label">Filtrar por:</p>
+
+        <div class="filters" role="group" aria-label="Filtrar vídeos">
+          <button class="filter-btn active" type="button" data-filter="curto">Shorts/Reels</button>
+          <button class="filter-btn" type="button" data-filter="longo">Longform</button>
+        </div>
+      </div>
+
+      <div class="video-grid" id="videoGrid" aria-live="polite"></div>
+
+      <div class="more-wrap">
+        <a class="more-btn" href="videos.html">ver mais</a>
+      </div>
+    </section>
+
+    <section class="clients-section" id="clientes">
+      <div class="clients-card">
+        <span class="power-icon" aria-hidden="true">⏻</span>
+
+        <div class="clients-heading">
+          <h2>clientes</h2>
+          <p>criadores com quem já trabalhei</p>
+        </div>
+
+        <div class="client-list">
+          <article class="client">
+            <img src="cliente1.png" alt="krynon">
+            <span>krynon</span>
+          </article>
+
+          <article class="client">
+            <img src="cliente2.png" alt="saskevir">
+            <span>saskevir</span>
+          </article>
+
+          <article class="client">
+            <img src="cliente3.png" alt="smokdela">
+            <span>smokdela</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contato">
+      <div class="avatar-wrap">
+        <img class="avatar" src="avatar.png" alt="Avatar Babi Edita">
+      </div>
+
+      <div class="contact-box">
+        <h2>contato</h2>
+
+        <div class="contact-links">
+          <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="https://instagram.com/SEU_USUARIO" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://twitter.com/SEU_USUARIO" target="_blank" rel="noopener noreferrer">Twitter</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="video-modal" id="videoModal" aria-hidden="true">
+    <button class="modal-close" id="modalClose" type="button" aria-label="Fechar vídeo">×</button>
+
+    <div class="modal-inner" id="modalInner">
+      <iframe
+        id="vimeoPlayer"
+        src=""
+        title="Player de vídeo"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <script src="script.js?v=100"></script>
+</body>
+</html>
