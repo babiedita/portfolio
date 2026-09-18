@@ -105,12 +105,16 @@ a {
 .hero-content {
   position: relative;
   z-index: 3;
+
   height: 100%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+
   text-align: center;
-  padding-top: 205px;
+
+  padding-top: 275px;
 }
 
 .hero-logo {
@@ -138,13 +142,16 @@ a {
 
   min-width: 112px;
   height: 40px;
-  margin-top: 225px;
+
+  margin-top: 155px;
+
   padding: 0 20px 1px;
 
   border: 1.5px solid rgba(255,255,255,.96);
   border-radius: 999px;
 
   color: #fff;
+
   font-size: 18px;
   font-weight: 400;
   line-height: 1;
