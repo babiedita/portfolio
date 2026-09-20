@@ -364,6 +364,14 @@ function openVideo(video) {
     return;
   }
 
+musicWasPlayingBeforeVideo =
+  backgroundAudio &&
+  !backgroundAudio.paused;
+
+if (musicWasPlayingBeforeVideo) {
+  backgroundAudio.pause();
+}
+  
   modalInner.classList.toggle(
     "is-vertical",
     video.type === "curto"
