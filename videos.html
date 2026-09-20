@@ -19,6 +19,71 @@
     <a href="tutoriais.html">tutoriais</a>
   </nav>
 
+  <div class="music-player" id="musicPlayer">
+
+  <img
+    class="music-cover"
+    id="musicCover"
+    src="covers/miimaker.png"
+    alt=""
+  >
+
+  <div class="music-info">
+
+    <span class="music-now">
+      Você está ouvindo agora:
+    </span>
+
+    <span class="music-title" id="musicTitle">
+      Mii Maker Editing Mii
+    </span>
+
+  </div>
+
+  <div class="music-controls">
+
+    <button
+      class="music-control"
+      id="musicPrev"
+      type="button"
+      aria-label="Música anterior"
+    >
+      ◀◀
+    </button>
+
+    <button
+      class="music-control music-play"
+      id="musicPlay"
+      type="button"
+      aria-label="Tocar ou pausar"
+    >
+      ▶
+    </button>
+
+    <button
+      class="music-control"
+      id="musicNext"
+      type="button"
+      aria-label="Próxima música"
+    >
+      ▶▶
+    </button>
+
+  </div>
+
+  <button
+    class="music-close"
+    id="musicClose"
+    type="button"
+    aria-label="Fechar player"
+  >
+    ×
+  </button>
+
+  <audio id="backgroundAudio" preload="auto"></audio>
+
+</div>
+
   <main class="videos-library">
     <header class="videos-library-head">
       <h1>vídeos</h1>
