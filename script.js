@@ -414,6 +414,15 @@ function closeVideo() {
   document.body.style.overflow = "";
 }
 
+if (musicWasPlayingBeforeVideo) {
+
+  playMusic();
+
+  musicWasPlayingBeforeVideo =
+    false;
+
+}
+
 if (modalClose) {
   modalClose.addEventListener(
     "click",
