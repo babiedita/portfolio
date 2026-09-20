@@ -436,4 +436,336 @@ document.addEventListener(
   }
 );
 
+const playlist = [
+  {
+    title: "Mii Maker Editing Mii",
+    src: "music/miimaker.mp3",
+    cover: "covers/miimaker.png"
+  },
+  {
+    title: "Wii Party",
+    src: "music/wiiparty.mp3",
+    cover: "covers/wiiparty.png"
+  },
+  {
+    title: "Aquatic Ambience",
+    src: "music/aquatic.mp3",
+    cover: "covers/aquatic.png"
+  }
+];
+
+const backgroundAudio =
+  document.getElementById("backgroundAudio");
+
+const musicPlayer =
+  document.getElementById("musicPlayer");
+
+const musicCover =
+  document.getElementById("musicCover");
+
+const musicTitle =
+  document.getElementById("musicTitle");
+
+const musicPrev =
+  document.getElementById("musicPrev");
+
+const musicPlay =
+  document.getElementById("musicPlay");
+
+const musicNext =
+  document.getElementById("musicNext");
+
+const musicClose =
+  document.getElementById("musicClose");
+
+
+let currentTrack =
+  Number(
+    localStorage.getItem("babiMusicTrack")
+  ) || 0;
+
+
+let musicWasPlayingBeforeVideo =
+  false;
+
+
+function loadTrack(index, restoreTime = false) {
+
+  currentTrack =
+    (
+      index +
+      playlist.length
+    ) % playlist.length;
+
+
+  const track =
+    playlist[currentTrack];
+
+
+  backgroundAudio.src =
+    track.src;
+
+
+  musicCover.src =
+    track.cover;
+
+
+  musicTitle.textContent =
+    track.title;
+
+
+  localStorage.setItem(
+    "babiMusicTrack",
+    currentTrack
+  );
+
+
+  if (restoreTime) {
+
+    const savedTime =
+      Number(
+        localStorage.getItem(
+          "babiMusicTime"
+        )
+      );
+
+
+    if (
+      Number.isFinite(savedTime) &&
+      savedTime > 0
+    ) {
+
+      backgroundAudio.addEventListener(
+        "loadedmetadata",
+        () => {
+
+          if (
+            savedTime <
+            backgroundAudio.duration
+          ) {
+
+            backgroundAudio.currentTime =
+              savedTime;
+
+          }
+
+        },
+        {
+          once: true
+        }
+      );
+
+    }
+
+  }
+
+}
+
+
+function updatePlayButton() {
+
+  musicPlay.textContent =
+    backgroundAudio.paused
+      ? "▶"
+      : "❚❚";
+
+}
+
+
+async function playMusic() {
+
+  try {
+
+    await backgroundAudio.play();
+
+    localStorage.setItem(
+      "babiMusicPlaying",
+      "true"
+    );
+
+  } catch (error) {
+
+    localStorage.setItem(
+      "babiMusicPlaying",
+      "false"
+    );
+
+  }
+
+
+  updatePlayButton();
+
+}
+
+
+function pauseMusic() {
+
+  backgroundAudio.pause();
+
+  localStorage.setItem(
+    "babiMusicPlaying",
+    "false"
+  );
+
+  updatePlayButton();
+
+}
+
+
+function nextTrack() {
+
+  loadTrack(
+    currentTrack + 1
+  );
+
+  playMusic();
+
+}
+
+
+function previousTrack() {
+
+  loadTrack(
+    currentTrack - 1
+  );
+
+  playMusic();
+
+}
+
+
+musicPlay?.addEventListener(
+  "click",
+  () => {
+
+    if (backgroundAudio.paused) {
+
+      playMusic();
+
+    } else {
+
+      pauseMusic();
+
+    }
+
+  }
+);
+
+
+musicNext?.addEventListener(
+  "click",
+  nextTrack
+);
+
+
+musicPrev?.addEventListener(
+  "click",
+  previousTrack
+);
+
+
+backgroundAudio?.addEventListener(
+  "ended",
+  nextTrack
+);
+
+
+backgroundAudio?.addEventListener(
+  "timeupdate",
+  () => {
+
+    localStorage.setItem(
+      "babiMusicTime",
+      backgroundAudio.currentTime
+    );
+
+  }
+);
+
+
+backgroundAudio?.addEventListener(
+  "play",
+  updatePlayButton
+);
+
+
+backgroundAudio?.addEventListener(
+  "pause",
+  updatePlayButton
+);
+
+
+musicClose?.addEventListener(
+  "click",
+  () => {
+
+    pauseMusic();
+
+    musicPlayer.classList.add(
+      "is-hidden"
+    );
+
+    localStorage.setItem(
+      "babiMusicHidden",
+      "true"
+    );
+
+  }
+);
+
+
+loadTrack(
+  currentTrack,
+  true
+);
+
+
+if (
+  localStorage.getItem(
+    "babiMusicHidden"
+  ) === "true"
+) {
+
+  musicPlayer?.classList.add(
+    "is-hidden"
+  );
+
+}
+
+
+const shouldResume =
+  localStorage.getItem(
+    "babiMusicPlaying"
+  ) === "true";
+
+
+if (shouldResume) {
+
+  playMusic();
+
+}
+
+
+document.addEventListener(
+  "pointerdown",
+  () => {
+
+    if (
+      shouldResume &&
+      backgroundAudio.paused &&
+      !musicPlayer?.classList.contains(
+        "is-hidden"
+      )
+    ) {
+
+      playMusic();
+
+    }
+
+  },
+  {
+    once: true
+  }
+);
+
 renderVideos();
