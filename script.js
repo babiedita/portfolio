@@ -3,9 +3,9 @@ const videos = [
     id: 1,
     type: "curto",
     home: true,
-    title: "A MELHOR IA DO MUNDO!",
-    subtitle: "dev.pedroca",
-    youtube: "https://youtube.com/shorts/_DPBiqax3RI?feature=share"
+    title: "Matando 20 e perdendo",
+    subtitle: "mercafatal",
+    youtube: "COLE_AQUI_O_LINK_DO_YOUTUBE_1"
   },
   {
     id: 2,
@@ -51,9 +51,9 @@ const videos = [
     id: 7,
     type: "longo",
     home: true,
-    title: "MATEI 20 e PERDI de JETT!",
-    subtitle: "marcafatal",
-    youtube: "https://www.youtube.com/watch?v=b_JcHN8aElA"
+    title: "Vídeo Longform 01",
+    subtitle: "cliente",
+    youtube: "COLE_AQUI_O_LINK_DO_YOUTUBE_7"
   },
   {
     id: 8,
@@ -81,19 +81,94 @@ const videos = [
   }
 ];
 
-const page = document.body.dataset.page || "home";
-const grid = document.getElementById("videoGrid");
-const filterButtons = [...document.querySelectorAll(".filter-btn")];
-const modal = document.getElementById("videoModal");
-const modalInner = document.getElementById("modalInner");
+
+const playlist = [
+  {
+    title: "Mii Maker Editing Mii",
+    src: "music/miimaker.mp3",
+    cover: "covers/miimaker.png"
+  },
+  {
+    title: "Wii Party",
+    src: "music/wiiparty.mp3",
+    cover: "covers/wiiparty.png"
+  },
+  {
+    title: "Aquatic Ambience",
+    src: "music/aquatic.mp3",
+    cover: "covers/aquatic.png"
+  }
+];
+
+
+const page =
+  document.body.dataset.page || "home";
+
+const grid =
+  document.getElementById("videoGrid");
+
+const filterButtons =
+  [...document.querySelectorAll(".filter-btn")];
+
+const modal =
+  document.getElementById("videoModal");
+
+const modalInner =
+  document.getElementById("modalInner");
 
 const videoPlayer =
   document.getElementById("youtubePlayer") ||
   document.getElementById("vimeoPlayer");
 
-const modalClose = document.getElementById("modalClose");
+const modalClose =
+  document.getElementById("modalClose");
+
+
+const backgroundAudio =
+  document.getElementById("backgroundAudio");
+
+const musicPlayer =
+  document.getElementById("musicPlayer");
+
+const musicCover =
+  document.getElementById("musicCover");
+
+const musicTitle =
+  document.getElementById("musicTitle");
+
+const musicPrev =
+  document.getElementById("musicPrev");
+
+const musicPlay =
+  document.getElementById("musicPlay");
+
+const musicNext =
+  document.getElementById("musicNext");
+
+const musicClose =
+  document.getElementById("musicClose");
+
 
 let currentFilter = "curto";
+
+let currentTrack =
+  parseInt(
+    localStorage.getItem("babiTrack") || "0",
+    10
+  );
+
+if (
+  !Number.isFinite(currentTrack) ||
+  currentTrack < 0 ||
+  currentTrack >= playlist.length
+) {
+  currentTrack = 0;
+}
+
+let musicWasPlayingBeforeVideo = false;
+
+let initialMusicUnlocked = false;
+
 
 function getYoutubeId(value) {
   if (!value) return null;
@@ -115,18 +190,27 @@ function getYoutubeId(value) {
       url.hostname === "youtu.be" ||
       url.hostname === "www.youtu.be"
     ) {
-      return url.pathname.split("/").filter(Boolean)[0] || null;
+      return (
+        url.pathname
+          .split("/")
+          .filter(Boolean)[0] || null
+      );
     }
 
-    const watchId = url.searchParams.get("v");
+    const watchId =
+      url.searchParams.get("v");
 
     if (watchId) {
       return watchId;
     }
 
-    const parts = url.pathname.split("/").filter(Boolean);
+    const parts =
+      url.pathname
+        .split("/")
+        .filter(Boolean);
 
-    const shortsIndex = parts.indexOf("shorts");
+    const shortsIndex =
+      parts.indexOf("shorts");
 
     if (
       shortsIndex !== -1 &&
@@ -135,7 +219,8 @@ function getYoutubeId(value) {
       return parts[shortsIndex + 1];
     }
 
-    const embedIndex = parts.indexOf("embed");
+    const embedIndex =
+      parts.indexOf("embed");
 
     if (
       embedIndex !== -1 &&
@@ -144,7 +229,8 @@ function getYoutubeId(value) {
       return parts[embedIndex + 1];
     }
 
-    const liveIndex = parts.indexOf("live");
+    const liveIndex =
+      parts.indexOf("live");
 
     if (
       liveIndex !== -1 &&
@@ -159,8 +245,10 @@ function getYoutubeId(value) {
   return null;
 }
 
+
 function getYoutubeThumbnail(value) {
-  const id = getYoutubeId(value);
+  const id =
+    getYoutubeId(value);
 
   if (!id) {
     return (
@@ -185,27 +273,41 @@ function getYoutubeThumbnail(value) {
   return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
 }
 
-function handleThumbnailError(image, youtubeValue) {
-  const id = getYoutubeId(youtubeValue);
+
+function handleThumbnailError(
+  image,
+  youtubeValue
+) {
+  const id =
+    getYoutubeId(youtubeValue);
 
   if (!id) return;
 
-  if (image.dataset.fallbackApplied === "true") {
+  if (
+    image.dataset.fallbackApplied === "true"
+  ) {
     return;
   }
 
-  image.dataset.fallbackApplied = "true";
-  image.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+  image.dataset.fallbackApplied =
+    "true";
+
+  image.src =
+    `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
 }
+
 
 function filteredVideos() {
   return videos.filter(
-    video => video.type === currentFilter
+    video =>
+      video.type === currentFilter
   );
 }
 
+
 function createVideoCard(video) {
-  const card = document.createElement("article");
+  const card =
+    document.createElement("article");
 
   card.className =
     `video-card ${
@@ -214,10 +316,16 @@ function createVideoCard(video) {
         : "is-longo"
     }`;
 
-  card.dataset.id = video.id;
-  card.dataset.type = video.type;
+  card.dataset.id =
+    video.id;
 
-  const thumbnail = getYoutubeThumbnail(video.youtube);
+  card.dataset.type =
+    video.type;
+
+  const thumbnail =
+    getYoutubeThumbnail(
+      video.youtube
+    );
 
   card.innerHTML = `
     <img
@@ -228,6 +336,7 @@ function createVideoCard(video) {
     >
 
     <div class="video-meta">
+
       <span class="video-title">
         ${video.title}
       </span>
@@ -235,12 +344,14 @@ function createVideoCard(video) {
       <span class="video-subtitle">
         ${video.subtitle}
       </span>
+
     </div>
   `;
 
-  const image = card.querySelector(".video-thumb");
+  const image =
+    card.querySelector(".video-thumb");
 
-  image.addEventListener(
+  image?.addEventListener(
     "error",
     () => {
       handleThumbnailError(
@@ -252,21 +363,28 @@ function createVideoCard(video) {
 
   card.addEventListener(
     "click",
-    () => openVideo(video)
+    () => {
+      openVideo(video);
+    }
   );
 
   return card;
 }
 
+
 function renderVideos() {
   if (!grid) return;
 
-  const list = filteredVideos();
+  const list =
+    filteredVideos();
 
   const visible =
     page === "home"
       ? list
-          .filter(video => video.home === true)
+          .filter(
+            video =>
+              video.home === true
+          )
           .slice(0, 4)
       : list;
 
@@ -291,8 +409,10 @@ function renderVideos() {
   );
 }
 
+
 function setFilter(filter) {
-  currentFilter = filter;
+  currentFilter =
+    filter;
 
   filterButtons.forEach(
     button => {
@@ -305,6 +425,7 @@ function setFilter(filter) {
 
   renderVideos();
 }
+
 
 filterButtons.forEach(
   button => {
@@ -319,8 +440,10 @@ filterButtons.forEach(
   }
 );
 
+
 function getYoutubeEmbedUrl(value) {
-  const id = getYoutubeId(value);
+  const id =
+    getYoutubeId(value);
 
   if (!id) {
     return null;
@@ -333,14 +456,274 @@ function getYoutubeEmbedUrl(value) {
       playsinline: "1",
       controls: "1",
       fs: "1",
-      iv_load_policy: "3",
-      modestbranding: "1"
+      iv_load_policy: "3"
     });
 
   return (
     `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`
   );
 }
+
+
+function updateMusicButton() {
+  if (
+    !musicPlay ||
+    !backgroundAudio
+  ) {
+    return;
+  }
+
+  musicPlay.textContent =
+    backgroundAudio.paused
+      ? "▶"
+      : "❚❚";
+}
+
+
+function saveMusicState() {
+  if (!backgroundAudio) return;
+
+  localStorage.setItem(
+    "babiTrack",
+    String(currentTrack)
+  );
+
+  localStorage.setItem(
+    "babiTime",
+    String(
+      backgroundAudio.currentTime || 0
+    )
+  );
+
+  localStorage.setItem(
+    "babiPlaying",
+    backgroundAudio.paused
+      ? "false"
+      : "true"
+  );
+}
+
+
+function loadMusic(
+  index,
+  restoreTime = false
+) {
+  if (!backgroundAudio) {
+    return;
+  }
+
+  currentTrack =
+    (
+      index +
+      playlist.length
+    ) % playlist.length;
+
+  const track =
+    playlist[currentTrack];
+
+  backgroundAudio.pause();
+
+  backgroundAudio.src =
+    track.src;
+
+  backgroundAudio.preload =
+    "auto";
+
+  if (musicCover) {
+    musicCover.src =
+      track.cover;
+  }
+
+  if (musicTitle) {
+    musicTitle.textContent =
+      track.title;
+  }
+
+  localStorage.setItem(
+    "babiTrack",
+    String(currentTrack)
+  );
+
+  if (restoreTime) {
+    const savedTime =
+      parseFloat(
+        localStorage.getItem(
+          "babiTime"
+        ) || "0"
+      );
+
+    backgroundAudio.addEventListener(
+      "loadedmetadata",
+      () => {
+        if (
+          savedTime > 0 &&
+          savedTime <
+            backgroundAudio.duration
+        ) {
+          backgroundAudio.currentTime =
+            savedTime;
+        }
+      },
+      {
+        once: true
+      }
+    );
+  } else {
+    localStorage.setItem(
+      "babiTime",
+      "0"
+    );
+  }
+
+  backgroundAudio.load();
+
+  updateMusicButton();
+}
+
+
+async function playMusic() {
+  if (!backgroundAudio) {
+    return;
+  }
+
+  try {
+    await backgroundAudio.play();
+
+    localStorage.setItem(
+      "babiPlaying",
+      "true"
+    );
+
+    updateMusicButton();
+  } catch (error) {
+    updateMusicButton();
+  }
+}
+
+
+function pauseMusic() {
+  if (!backgroundAudio) {
+    return;
+  }
+
+  backgroundAudio.pause();
+
+  localStorage.setItem(
+    "babiPlaying",
+    "false"
+  );
+
+  updateMusicButton();
+}
+
+
+function nextMusic() {
+  loadMusic(
+    currentTrack + 1,
+    false
+  );
+
+  playMusic();
+}
+
+
+function previousMusic() {
+  loadMusic(
+    currentTrack - 1,
+    false
+  );
+
+  playMusic();
+}
+
+
+musicPlay?.addEventListener(
+  "click",
+  event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!backgroundAudio) {
+      return;
+    }
+
+    if (backgroundAudio.paused) {
+      playMusic();
+    } else {
+      pauseMusic();
+    }
+  }
+);
+
+
+musicNext?.addEventListener(
+  "click",
+  event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    nextMusic();
+  }
+);
+
+
+musicPrev?.addEventListener(
+  "click",
+  event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    previousMusic();
+  }
+);
+
+
+musicClose?.addEventListener(
+  "click",
+  event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    pauseMusic();
+
+    musicPlayer?.classList.add(
+      "is-hidden"
+    );
+  }
+);
+
+
+backgroundAudio?.addEventListener(
+  "ended",
+  () => {
+    nextMusic();
+  }
+);
+
+
+backgroundAudio?.addEventListener(
+  "play",
+  () => {
+    updateMusicButton();
+  }
+);
+
+
+backgroundAudio?.addEventListener(
+  "pause",
+  () => {
+    updateMusicButton();
+  }
+);
+
+
+backgroundAudio?.addEventListener(
+  "timeupdate",
+  () => {
+    saveMusicState();
+  }
+);
+
 
 function openVideo(video) {
   if (
@@ -357,37 +740,43 @@ function openVideo(video) {
     );
 
   if (!embedUrl) {
-    console.warn(
-      `Coloque um link válido do YouTube no vídeo ${video.id}.`
-    );
-
     return;
   }
 
-musicWasPlayingBeforeVideo =
-  backgroundAudio &&
-  !backgroundAudio.paused;
+  musicWasPlayingBeforeVideo =
+    Boolean(
+      backgroundAudio &&
+      !backgroundAudio.paused
+    );
 
-if (musicWasPlayingBeforeVideo) {
-  backgroundAudio.pause();
-}
-  
+  if (
+    musicWasPlayingBeforeVideo &&
+    backgroundAudio
+  ) {
+    backgroundAudio.pause();
+  }
+
   modalInner.classList.toggle(
     "is-vertical",
     video.type === "curto"
   );
 
-  videoPlayer.src = embedUrl;
+  videoPlayer.src =
+    embedUrl;
 
-  modal.classList.add("open");
+  modal.classList.add(
+    "open"
+  );
 
   modal.setAttribute(
     "aria-hidden",
     "false"
   );
 
-  document.body.style.overflow = "hidden";
+  document.body.style.overflow =
+    "hidden";
 }
+
 
 function closeVideo() {
   if (
@@ -404,24 +793,28 @@ function closeVideo() {
     "is-vertical"
   );
 
-  modal.classList.remove("open");
+  modal.classList.remove(
+    "open"
+  );
 
   modal.setAttribute(
     "aria-hidden",
     "true"
   );
 
-  document.body.style.overflow = "";
-}
+  document.body.style.overflow =
+    "";
 
-if (musicWasPlayingBeforeVideo) {
-
-  playMusic();
+  if (
+    musicWasPlayingBeforeVideo
+  ) {
+    playMusic();
+  }
 
   musicWasPlayingBeforeVideo =
     false;
-
 }
+
 
 if (modalClose) {
   modalClose.addEventListener(
@@ -430,307 +823,102 @@ if (modalClose) {
   );
 }
 
+
 if (modal) {
   modal.addEventListener(
     "click",
     event => {
-      if (event.target === modal) {
+      if (
+        event.target === modal
+      ) {
         closeVideo();
       }
     }
   );
 }
 
+
 document.addEventListener(
   "keydown",
   event => {
     if (
       event.key === "Escape" &&
-      modal?.classList.contains("open")
+      modal?.classList.contains(
+        "open"
+      )
     ) {
       closeVideo();
     }
   }
 );
 
-const playlist = [
-  {
-    title: "Mii Maker Editing Mii",
-    src: "music/miimaker.mp3",
-    cover: "covers/miimaker.png"
-  },
-  {
-    title: "Wii Party",
-    src: "music/wiiparty.mp3",
-    cover: "covers/wiiparty.png"
-  },
-  {
-    title: "Aquatic Ambience",
-    src: "music/aquatic.mp3",
-    cover: "covers/aquatic.png"
-  }
-];
-
-const backgroundAudio = document.getElementById("backgroundAudio");
-const musicPlayer = document.getElementById("musicPlayer");
-const musicCover = document.getElementById("musicCover");
-const musicTitle = document.getElementById("musicTitle");
-const musicPrev = document.getElementById("musicPrev");
-const musicPlay = document.getElementById("musicPlay");
-const musicNext = document.getElementById("musicNext");
-const musicClose = document.getElementById("musicClose");
-
-let currentTrack = Number(localStorage.getItem("babiMusicTrack")) || 0;
-let musicWasPlayingBeforeVideo = false;
-
-function updatePlayButton() {
-  if (!musicPlay || !backgroundAudio) return;
-
-  musicPlay.textContent =
-    backgroundAudio.paused
-      ? "▶"
-      : "❚❚";
-}
-
-function loadTrack(index, restoreTime = false) {
-  if (!backgroundAudio) return;
-
-  currentTrack =
-    (index + playlist.length) % playlist.length;
-
-  const track = playlist[currentTrack];
-
-  backgroundAudio.src = track.src;
-
-  if (musicCover) {
-    musicCover.src = track.cover;
-  }
-
-  if (musicTitle) {
-    musicTitle.textContent = track.title;
-  }
-
-  localStorage.setItem(
-    "babiMusicTrack",
-    currentTrack
-  );
-
-  if (restoreTime) {
-    const savedTime =
-      Number(
-        localStorage.getItem("babiMusicTime")
-      ) || 0;
-
-    backgroundAudio.addEventListener(
-      "loadedmetadata",
-      () => {
-        if (
-          savedTime > 0 &&
-          savedTime < backgroundAudio.duration
-        ) {
-          backgroundAudio.currentTime = savedTime;
-        }
-      },
-      { once: true }
-    );
-  }
-
-  backgroundAudio.load();
-
-  updatePlayButton();
-}
-
-async function playMusic() {
-  if (!backgroundAudio) return;
-
-  try {
-    await backgroundAudio.play();
-
-    localStorage.setItem(
-      "babiMusicPlaying",
-      "true"
-    );
-
-    updatePlayButton();
-  } catch (error) {
-    console.log(
-      "O navegador aguardou uma interação para liberar o áudio."
-    );
-  }
-}
-
-function pauseMusic() {
-  if (!backgroundAudio) return;
-
-  backgroundAudio.pause();
-
-  localStorage.setItem(
-    "babiMusicPlaying",
-    "false"
-  );
-
-  updatePlayButton();
-}
-
-function nextTrack() {
-  loadTrack(currentTrack + 1);
-  playMusic();
-}
-
-function previousTrack() {
-  loadTrack(currentTrack - 1);
-  playMusic();
-}
-
-musicPlay?.addEventListener(
-  "click",
-  event => {
-    event.stopPropagation();
-
-    if (backgroundAudio.paused) {
-      playMusic();
-    } else {
-      pauseMusic();
-    }
-  }
-);
-
-musicNext?.addEventListener(
-  "click",
-  event => {
-    event.stopPropagation();
-    nextTrack();
-  }
-);
-
-musicPrev?.addEventListener(
-  "click",
-  event => {
-    event.stopPropagation();
-    previousTrack();
-  }
-);
-
-musicClose?.addEventListener(
-  "click",
-  event => {
-    event.stopPropagation();
-
-    pauseMusic();
-
-    musicPlayer?.classList.add(
-      "is-hidden"
-    );
-
-    localStorage.setItem(
-      "babiMusicHidden",
-      "true"
-    );
-  }
-);
-
-backgroundAudio?.addEventListener(
-  "ended",
-  () => {
-    nextTrack();
-  }
-);
-
-backgroundAudio?.addEventListener(
-  "play",
-  updatePlayButton
-);
-
-backgroundAudio?.addEventListener(
-  "pause",
-  updatePlayButton
-);
-
-backgroundAudio?.addEventListener(
-  "timeupdate",
-  () => {
-    localStorage.setItem(
-      "babiMusicTime",
-      backgroundAudio.currentTime
-    );
-  }
-);
 
 window.addEventListener(
   "beforeunload",
   () => {
-    if (!backgroundAudio) return;
-
-    localStorage.setItem(
-      "babiMusicTrack",
-      currentTrack
-    );
-
-    localStorage.setItem(
-      "babiMusicTime",
-      backgroundAudio.currentTime
-    );
-
-    localStorage.setItem(
-      "babiMusicPlaying",
-      backgroundAudio.paused
-        ? "false"
-        : "true"
-    );
+    saveMusicState();
   }
 );
 
-loadTrack(currentTrack, true);
 
-if (
-  localStorage.getItem("babiMusicHidden") === "true"
-) {
-  musicPlayer?.classList.add(
-    "is-hidden"
-  );
+loadMusic(
+  currentTrack,
+  true
+);
+
+
+const shouldStartMusic =
+  localStorage.getItem(
+    "babiPlaying"
+  ) !== "false";
+
+
+function tryInitialMusic() {
+  if (
+    initialMusicUnlocked ||
+    !backgroundAudio ||
+    musicPlayer?.classList.contains(
+      "is-hidden"
+    )
+  ) {
+    return;
+  }
+
+  initialMusicUnlocked = true;
+
+  playMusic();
 }
 
-const shouldResume =
-  localStorage.getItem("babiMusicPlaying") === "true";
 
-if (shouldResume) {
+if (shouldStartMusic) {
   backgroundAudio?.addEventListener(
     "canplay",
     () => {
       playMusic();
     },
-    { once: true }
+    {
+      once: true
+    }
   );
-}
 
-function unlockMusic() {
-  if (
-    shouldResume &&
-    backgroundAudio?.paused &&
-    !musicPlayer?.classList.contains("is-hidden")
-  ) {
-    playMusic();
-  }
+  playMusic();
 
-  document.removeEventListener(
+  document.addEventListener(
     "pointerdown",
-    unlockMusic
+    tryInitialMusic,
+    {
+      once: true
+    }
   );
 
-  document.removeEventListener(
+  document.addEventListener(
     "keydown",
-    unlockMusic
+    tryInitialMusic,
+    {
+      once: true
+    }
   );
 }
 
-document.addEventListener(
-  "pointerdown",
-  unlockMusic
-);
-
-document.addEventListener(
-  "keydown",
-  unlockMusic
-);
 
 renderVideos();
