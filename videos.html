@@ -1,25 +1,68 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#ffffff">
-  <title>Vídeos — Babi Edita</title>
 
-  <link rel="stylesheet" href="https://use.typekit.net/ndv3lae.css">
-  <link rel="stylesheet" href="style.css?v=100">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Vídeos — Babi Edita
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="https://use.typekit.net/ndv3lae.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="style.css?v=400"
+  >
+
 </head>
-<body class="videos-page" data-page="videos">
 
-  <nav class="subpage-nav" aria-label="Navegação">
-    <a href="index.html#trabalho">trabalho</a>
-    <a href="index.html#clientes">clientes</a>
-    <a href="index.html#contato">contato</a>
-    <a href="parcerias.html">parcerias</a>
-    <a href="tutoriais.html">tutoriais</a>
-  </nav>
 
-  <div class="music-player" id="musicPlayer">
+<body
+  class="videos-page"
+  data-page="videos"
+>
+
+
+<nav class="subpage-nav">
+
+  <a href="index.html#trabalho">
+    trabalho
+  </a>
+
+  <a href="index.html#clientes">
+    clientes
+  </a>
+
+  <a href="index.html#contato">
+    contato
+  </a>
+
+  <a href="parcerias.html">
+    parcerias
+  </a>
+
+  <a href="tutoriais.html">
+    tutoriais
+  </a>
+
+</nav>
+
+
+<div
+  class="music-player"
+  id="musicPlayer"
+>
 
   <img
     class="music-cover"
@@ -34,11 +77,15 @@
       Você está ouvindo agora:
     </span>
 
-    <span class="music-title" id="musicTitle">
+    <span
+      class="music-title"
+      id="musicTitle"
+    >
       Mii Maker Editing Mii
     </span>
 
   </div>
+
 
   <div class="music-controls">
 
@@ -46,7 +93,6 @@
       class="music-control"
       id="musicPrev"
       type="button"
-      aria-label="Música anterior"
     >
       ◀◀
     </button>
@@ -55,7 +101,6 @@
       class="music-control music-play"
       id="musicPlay"
       type="button"
-      aria-label="Tocar ou pausar"
     >
       ▶
     </button>
@@ -64,60 +109,160 @@
       class="music-control"
       id="musicNext"
       type="button"
-      aria-label="Próxima música"
     >
       ▶▶
     </button>
 
   </div>
 
+
   <button
     class="music-close"
     id="musicClose"
     type="button"
-    aria-label="Fechar player"
   >
     ×
   </button>
 
-  <audio id="backgroundAudio" preload="auto"></audio>
+
+  <audio
+    id="backgroundAudio"
+    preload="auto"
+    autoplay
+  ></audio>
 
 </div>
 
-  <main class="videos-library">
-    <header class="videos-library-head">
-      <h1>vídeos</h1>
-      <p>todos os trabalhos</p>
-    </header>
 
-    <section class="videos-work-section">
-      <div class="filter-wrap videos-filter-wrap">
-        <p class="filter-label">Filtrar por:</p>
+<div
+  class="music-player-mini is-hidden"
+  id="musicPlayerMini"
+>
 
-        <div class="filters" role="group" aria-label="Filtrar vídeos">
-          <button class="filter-btn active" type="button" data-filter="curto">Shorts/Reels</button>
-          <button class="filter-btn" type="button" data-filter="longo">Longform</button>
-        </div>
-      </div>
+  <button
+    class="music-mini-control"
+    id="musicMiniPrev"
+    type="button"
+  >
+    ◀◀
+  </button>
 
-      <div class="video-grid full-video-grid" id="videoGrid" aria-live="polite"></div>
-    </section>
-  </main>
+  <button
+    class="music-mini-control music-mini-play"
+    id="musicMiniPlay"
+    type="button"
+  >
+    ▶
+  </button>
 
-  <div class="video-modal" id="videoModal" aria-hidden="true">
-    <button class="modal-close" id="modalClose" type="button" aria-label="Fechar vídeo">×</button>
+  <button
+    class="music-mini-control"
+    id="musicMiniNext"
+    type="button"
+  >
+    ▶▶
+  </button>
 
-    <div class="modal-inner" id="modalInner">
-      <iframe
-        id="vimeoPlayer"
-        src=""
-        title="Player de vídeo"
-        allow="autoplay; fullscreen; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
+</div>
+
+
+
+<main class="videos-library">
+
+
+  <div class="videos-library-head">
+
+    <h1>
+      vídeos
+    </h1>
+
+    <p>
+      todos os trabalhos
+    </p>
+
   </div>
 
-  <script src="script.js?v=100"></script>
+
+  <section class="videos-work-section">
+
+    <div class="filter-wrap">
+
+      <p class="filter-label">
+        Filtrar por:
+      </p>
+
+      <div class="filters">
+
+        <button
+          class="filter-btn active"
+          type="button"
+          data-filter="curto"
+        >
+          <span>
+            Shorts/Reels
+          </span>
+        </button>
+
+        <button
+          class="filter-btn"
+          type="button"
+          data-filter="longo"
+        >
+          <span>
+            Longform
+          </span>
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="video-grid"
+      id="videoGrid"
+    ></div>
+
+  </section>
+
+
+</main>
+
+
+
+<div
+  class="video-modal"
+  id="videoModal"
+  aria-hidden="true"
+>
+
+  <button
+    class="modal-close"
+    id="modalClose"
+    type="button"
+  >
+    ×
+  </button>
+
+
+  <div
+    class="modal-inner"
+    id="modalInner"
+  >
+
+    <iframe
+      id="youtubePlayer"
+      src=""
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+
+  </div>
+
+</div>
+
+
+<script src="script.js?v=400"></script>
+
 </body>
 </html>
