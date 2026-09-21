@@ -471,128 +471,79 @@ const playlist = [
   }
 ];
 
-const backgroundAudio =
-  document.getElementById("backgroundAudio");
+const backgroundAudio = document.getElementById("backgroundAudio");
+const musicPlayer = document.getElementById("musicPlayer");
+const musicCover = document.getElementById("musicCover");
+const musicTitle = document.getElementById("musicTitle");
+const musicPrev = document.getElementById("musicPrev");
+const musicPlay = document.getElementById("musicPlay");
+const musicNext = document.getElementById("musicNext");
+const musicClose = document.getElementById("musicClose");
 
-const musicPlayer =
-  document.getElementById("musicPlayer");
+let currentTrack = Number(localStorage.getItem("babiMusicTrack")) || 0;
+let musicWasPlayingBeforeVideo = false;
 
-const musicCover =
-  document.getElementById("musicCover");
+function updatePlayButton() {
+  if (!musicPlay || !backgroundAudio) return;
 
-const musicTitle =
-  document.getElementById("musicTitle");
-
-const musicPrev =
-  document.getElementById("musicPrev");
-
-const musicPlay =
-  document.getElementById("musicPlay");
-
-const musicNext =
-  document.getElementById("musicNext");
-
-const musicClose =
-  document.getElementById("musicClose");
-
-
-let currentTrack =
-  Number(
-    localStorage.getItem("babiMusicTrack")
-  ) || 0;
-
-
-let musicWasPlayingBeforeVideo =
-  false;
-
+  musicPlay.textContent =
+    backgroundAudio.paused
+      ? "▶"
+      : "❚❚";
+}
 
 function loadTrack(index, restoreTime = false) {
+  if (!backgroundAudio) return;
 
   currentTrack =
-    (
-      index +
-      playlist.length
-    ) % playlist.length;
+    (index + playlist.length) % playlist.length;
 
+  const track = playlist[currentTrack];
 
-  const track =
-    playlist[currentTrack];
+  backgroundAudio.src = track.src;
 
+  if (musicCover) {
+    musicCover.src = track.cover;
+  }
 
-  backgroundAudio.src =
-    track.src;
-
-
-  musicCover.src =
-    track.cover;
-
-
-  musicTitle.textContent =
-    track.title;
-
+  if (musicTitle) {
+    musicTitle.textContent = track.title;
+  }
 
   localStorage.setItem(
     "babiMusicTrack",
     currentTrack
   );
 
-
   if (restoreTime) {
-
     const savedTime =
       Number(
-        localStorage.getItem(
-          "babiMusicTime"
-        )
-      );
+        localStorage.getItem("babiMusicTime")
+      ) || 0;
 
-
-    if (
-      Number.isFinite(savedTime) &&
-      savedTime > 0
-    ) {
-
-      backgroundAudio.addEventListener(
-        "loadedmetadata",
-        () => {
-
-          if (
-            savedTime <
-            backgroundAudio.duration
-          ) {
-
-            backgroundAudio.currentTime =
-              savedTime;
-
-          }
-
-        },
-        {
-          once: true
+    backgroundAudio.addEventListener(
+      "loadedmetadata",
+      () => {
+        if (
+          savedTime > 0 &&
+          savedTime < backgroundAudio.duration
+        ) {
+          backgroundAudio.currentTime = savedTime;
         }
-      );
-
-    }
-
+      },
+      { once: true }
+    );
   }
 
+  backgroundAudio.load();
+
+  updatePlayButton();
 }
-
-
-function updatePlayButton() {
-
-  musicPlay.textContent =
-    backgroundAudio.paused
-      ? "▶"
-      : "❚❚";
-
-}
-
 
 async function playMusic() {
+  if (!backgroundAudio) return;
 
   try {
-
     await backgroundAudio.play();
 
     localStorage.setItem(
@@ -600,22 +551,16 @@ async function playMusic() {
       "true"
     );
 
+    updatePlayButton();
   } catch (error) {
-
-    localStorage.setItem(
-      "babiMusicPlaying",
-      "false"
+    console.log(
+      "O navegador aguardou uma interação para liberar o áudio."
     );
-
   }
-
-
-  updatePlayButton();
-
 }
 
-
 function pauseMusic() {
+  if (!backgroundAudio) return;
 
   backgroundAudio.pause();
 
@@ -625,100 +570,55 @@ function pauseMusic() {
   );
 
   updatePlayButton();
-
 }
-
 
 function nextTrack() {
-
-  loadTrack(
-    currentTrack + 1
-  );
-
+  loadTrack(currentTrack + 1);
   playMusic();
-
 }
-
 
 function previousTrack() {
-
-  loadTrack(
-    currentTrack - 1
-  );
-
+  loadTrack(currentTrack - 1);
   playMusic();
-
 }
-
 
 musicPlay?.addEventListener(
   "click",
-  () => {
+  event => {
+    event.stopPropagation();
 
     if (backgroundAudio.paused) {
-
       playMusic();
-
     } else {
-
       pauseMusic();
-
     }
-
   }
 );
-
 
 musicNext?.addEventListener(
   "click",
-  nextTrack
-);
-
-
-musicPrev?.addEventListener(
-  "click",
-  previousTrack
-);
-
-
-backgroundAudio?.addEventListener(
-  "ended",
-  nextTrack
-);
-
-
-backgroundAudio?.addEventListener(
-  "timeupdate",
-  () => {
-
-    localStorage.setItem(
-      "babiMusicTime",
-      backgroundAudio.currentTime
-    );
-
+  event => {
+    event.stopPropagation();
+    nextTrack();
   }
 );
 
-
-backgroundAudio?.addEventListener(
-  "play",
-  updatePlayButton
+musicPrev?.addEventListener(
+  "click",
+  event => {
+    event.stopPropagation();
+    previousTrack();
+  }
 );
-
-
-backgroundAudio?.addEventListener(
-  "pause",
-  updatePlayButton
-);
-
 
 musicClose?.addEventListener(
   "click",
-  () => {
+  event => {
+    event.stopPropagation();
 
     pauseMusic();
 
-    musicPlayer.classList.add(
+    musicPlayer?.classList.add(
       "is-hidden"
     );
 
@@ -726,63 +626,111 @@ musicClose?.addEventListener(
       "babiMusicHidden",
       "true"
     );
-
   }
 );
 
-
-loadTrack(
-  currentTrack,
-  true
+backgroundAudio?.addEventListener(
+  "ended",
+  () => {
+    nextTrack();
+  }
 );
 
+backgroundAudio?.addEventListener(
+  "play",
+  updatePlayButton
+);
+
+backgroundAudio?.addEventListener(
+  "pause",
+  updatePlayButton
+);
+
+backgroundAudio?.addEventListener(
+  "timeupdate",
+  () => {
+    localStorage.setItem(
+      "babiMusicTime",
+      backgroundAudio.currentTime
+    );
+  }
+);
+
+window.addEventListener(
+  "beforeunload",
+  () => {
+    if (!backgroundAudio) return;
+
+    localStorage.setItem(
+      "babiMusicTrack",
+      currentTrack
+    );
+
+    localStorage.setItem(
+      "babiMusicTime",
+      backgroundAudio.currentTime
+    );
+
+    localStorage.setItem(
+      "babiMusicPlaying",
+      backgroundAudio.paused
+        ? "false"
+        : "true"
+    );
+  }
+);
+
+loadTrack(currentTrack, true);
 
 if (
-  localStorage.getItem(
-    "babiMusicHidden"
-  ) === "true"
+  localStorage.getItem("babiMusicHidden") === "true"
 ) {
-
   musicPlayer?.classList.add(
     "is-hidden"
   );
-
 }
-
 
 const shouldResume =
-  localStorage.getItem(
-    "babiMusicPlaying"
-  ) === "true";
-
+  localStorage.getItem("babiMusicPlaying") === "true";
 
 if (shouldResume) {
-
-  playMusic();
-
+  backgroundAudio?.addEventListener(
+    "canplay",
+    () => {
+      playMusic();
+    },
+    { once: true }
+  );
 }
 
+function unlockMusic() {
+  if (
+    shouldResume &&
+    backgroundAudio?.paused &&
+    !musicPlayer?.classList.contains("is-hidden")
+  ) {
+    playMusic();
+  }
+
+  document.removeEventListener(
+    "pointerdown",
+    unlockMusic
+  );
+
+  document.removeEventListener(
+    "keydown",
+    unlockMusic
+  );
+}
 
 document.addEventListener(
   "pointerdown",
-  () => {
+  unlockMusic
+);
 
-    if (
-      shouldResume &&
-      backgroundAudio.paused &&
-      !musicPlayer?.classList.contains(
-        "is-hidden"
-      )
-    ) {
-
-      playMusic();
-
-    }
-
-  },
-  {
-    once: true
-  }
+document.addEventListener(
+  "keydown",
+  unlockMusic
 );
 
 renderVideos();
