@@ -3,41 +3,41 @@ const videos = [
     id: 1,
     type: "curto",
     home: true,
-    title: "Matando 20 e perdendo",
-    subtitle: "mercafatal",
-    youtube: "COLE_AQUI_O_LINK_DO_YOUTUBE_1"
+    title: "A MELHOR IA...",
+    subtitle: "dev.pedroca",
+    youtube: "https://youtu.be/_DPBiqax3RI?si=UziqVa82r_FY4odw"
   },
   {
     id: 2,
     type: "curto",
     home: true,
-    title: "Minha FADE tá CLUTCHZERA!",
-    subtitle: "bombazero",
-    youtube: "COLE_AQUI_O_LINK_DO_YOUTUBE_2"
+    title: "Você é o que come...",
+    subtitle: "lyukio",
+    youtube: "https://youtu.be/M8ZeJpR1RlQ?si=3zVcxLhAZHB9MpVW"
   },
   {
     id: 3,
     type: "curto",
     home: true,
-    title: "Short / Reel 03",
-    subtitle: "cliente",
-    youtube: "COLE_AQUI_O_LINK_DO_YOUTUBE_3"
+    title: "Fingi estar afk e ganhei o round",
+    subtitle: "levikingbr",
+    youtube: "https://youtu.be/87HsdZ6cYPU?si=9ZbS6ZGdh76m8Pp8"
   },
   {
     id: 4,
     type: "curto",
     home: true,
-    title: "Short / Reel 04",
+    title: "Pov: você tem refluxo com sons de arroto",
     subtitle: "cliente",
-    youtube: "COLE_AQUI_O_LINK_DO_YOUTUBE_4"
+    youtube: "https://youtu.be/Iu6F89vnrkU?si=ZelhorLrSoMU1h3t"
   },
   {
     id: 5,
     type: "curto",
     home: false,
-    title: "Short / Reel 05",
+    title: "Pov: você jogou seu primeiro jogo de terror",
     subtitle: "cliente",
-    youtube: "COLE_AQUI_O_LINK_DO_YOUTUBE_5"
+    youtube: "https://youtube.com/shorts/PEXLdziGxFk"
   },
   {
     id: 6,
@@ -51,9 +51,9 @@ const videos = [
     id: 7,
     type: "longo",
     home: true,
-    title: "Vídeo Longform 01",
-    subtitle: "cliente",
-    youtube: "COLE_AQUI_O_LINK_DO_YOUTUBE_7"
+    title: "MATEI 20 e PERDI de JETT!",
+    subtitle: "marcafatal",
+    youtube: "https://youtu.be/b_JcHN8aElA?si=Tt7XYVlBXdY5GvJU"
   },
   {
     id: 8,
