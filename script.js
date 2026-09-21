@@ -104,21 +104,26 @@ const playlist = [
 const page =
   document.body.dataset.page || "home";
 
+
 const grid =
   document.getElementById("videoGrid");
+
 
 const filterButtons =
   [...document.querySelectorAll(".filter-btn")];
 
+
 const modal =
   document.getElementById("videoModal");
+
 
 const modalInner =
   document.getElementById("modalInner");
 
+
 const videoPlayer =
-  document.getElementById("youtubePlayer") ||
-  document.getElementById("vimeoPlayer");
+  document.getElementById("youtubePlayer");
+
 
 const modalClose =
   document.getElementById("modalClose");
@@ -127,35 +132,63 @@ const modalClose =
 const backgroundAudio =
   document.getElementById("backgroundAudio");
 
+
 const musicPlayer =
   document.getElementById("musicPlayer");
+
+
+const musicPlayerMini =
+  document.getElementById("musicPlayerMini");
+
 
 const musicCover =
   document.getElementById("musicCover");
 
+
 const musicTitle =
   document.getElementById("musicTitle");
+
 
 const musicPrev =
   document.getElementById("musicPrev");
 
+
 const musicPlay =
   document.getElementById("musicPlay");
 
+
 const musicNext =
   document.getElementById("musicNext");
+
 
 const musicClose =
   document.getElementById("musicClose");
 
 
-let currentFilter = "curto";
+const musicMiniPrev =
+  document.getElementById("musicMiniPrev");
+
+
+const musicMiniPlay =
+  document.getElementById("musicMiniPlay");
+
+
+const musicMiniNext =
+  document.getElementById("musicMiniNext");
+
+
+let currentFilter =
+  "curto";
+
 
 let currentTrack =
   parseInt(
-    localStorage.getItem("babiTrack") || "0",
+    localStorage.getItem(
+      "babiMusicTrackV2"
+    ) || "0",
     10
   );
+
 
 if (
   !Number.isFinite(currentTrack) ||
@@ -165,26 +198,45 @@ if (
   currentTrack = 0;
 }
 
-let musicWasPlayingBeforeVideo = false;
 
-let initialMusicUnlocked = false;
+let musicDesiredPlaying =
+  localStorage.getItem(
+    "babiMusicWantedV2"
+  ) !== "false";
+
+
+let musicWasPlayingBeforeVideo =
+  false;
+
 
 
 function getYoutubeId(value) {
-  if (!value) return null;
-
-  value = value.trim();
-
-  if (value.startsWith("COLE_AQUI")) {
+  if (!value) {
     return null;
   }
 
-  if (/^[a-zA-Z0-9_-]{11}$/.test(value)) {
+  value =
+    value.trim();
+
+  if (
+    value.startsWith(
+      "COLE_AQUI"
+    )
+  ) {
+    return null;
+  }
+
+  if (
+    /^[a-zA-Z0-9_-]{11}$/.test(
+      value
+    )
+  ) {
     return value;
   }
 
   try {
-    const url = new URL(value);
+    const url =
+      new URL(value);
 
     if (
       url.hostname === "youtu.be" ||
@@ -193,7 +245,8 @@ function getYoutubeId(value) {
       return (
         url.pathname
           .split("/")
-          .filter(Boolean)[0] || null
+          .filter(Boolean)[0]
+        || null
       );
     }
 
@@ -216,7 +269,9 @@ function getYoutubeId(value) {
       shortsIndex !== -1 &&
       parts[shortsIndex + 1]
     ) {
-      return parts[shortsIndex + 1];
+      return parts[
+        shortsIndex + 1
+      ];
     }
 
     const embedIndex =
@@ -226,7 +281,9 @@ function getYoutubeId(value) {
       embedIndex !== -1 &&
       parts[embedIndex + 1]
     ) {
-      return parts[embedIndex + 1];
+      return parts[
+        embedIndex + 1
+      ];
     }
 
     const liveIndex =
@@ -236,9 +293,13 @@ function getYoutubeId(value) {
       liveIndex !== -1 &&
       parts[liveIndex + 1]
     ) {
-      return parts[liveIndex + 1];
+      return parts[
+        liveIndex + 1
+      ];
     }
-  } catch (error) {
+  }
+
+  catch (error) {
     return null;
   }
 
@@ -246,13 +307,17 @@ function getYoutubeId(value) {
 }
 
 
-function getYoutubeThumbnail(value) {
+
+function getYoutubeThumbnail(
+  value
+) {
   const id =
     getYoutubeId(value);
 
   if (!id) {
     return (
-      "data:image/svg+xml;charset=UTF-8," +
+      "data:image/svg+xml;charset=UTF-8,"
+      +
       encodeURIComponent(`
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -270,8 +335,11 @@ function getYoutubeThumbnail(value) {
     );
   }
 
-  return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+  return (
+    `https://img.youtube.com/vi/${id}/maxresdefault.jpg`
+  );
 }
+
 
 
 function handleThumbnailError(
@@ -279,17 +347,24 @@ function handleThumbnailError(
   youtubeValue
 ) {
   const id =
-    getYoutubeId(youtubeValue);
+    getYoutubeId(
+      youtubeValue
+    );
 
-  if (!id) return;
+  if (!id) {
+    return;
+  }
 
   if (
-    image.dataset.fallbackApplied === "true"
+    image.dataset
+      .fallbackApplied ===
+    "true"
   ) {
     return;
   }
 
-  image.dataset.fallbackApplied =
+  image.dataset
+    .fallbackApplied =
     "true";
 
   image.src =
@@ -297,17 +372,22 @@ function handleThumbnailError(
 }
 
 
+
 function filteredVideos() {
   return videos.filter(
     video =>
-      video.type === currentFilter
+      video.type ===
+      currentFilter
   );
 }
 
 
+
 function createVideoCard(video) {
   const card =
-    document.createElement("article");
+    document.createElement(
+      "article"
+    );
 
   card.className =
     `video-card ${
@@ -349,7 +429,9 @@ function createVideoCard(video) {
   `;
 
   const image =
-    card.querySelector(".video-thumb");
+    card.querySelector(
+      ".video-thumb"
+    );
 
   image?.addEventListener(
     "error",
@@ -372,21 +454,26 @@ function createVideoCard(video) {
 }
 
 
+
 function renderVideos() {
-  if (!grid) return;
+  if (!grid) {
+    return;
+  }
 
   const list =
     filteredVideos();
 
   const visible =
     page === "home"
-      ? list
-          .filter(
-            video =>
-              video.home === true
-          )
-          .slice(0, 4)
-      : list;
+      ?
+      list
+        .filter(
+          video =>
+            video.home === true
+        )
+        .slice(0,4)
+      :
+      list;
 
   grid.classList.toggle(
     "is-curto-grid",
@@ -398,7 +485,8 @@ function renderVideos() {
     currentFilter === "longo"
   );
 
-  grid.innerHTML = "";
+  grid.innerHTML =
+    "";
 
   visible.forEach(
     video => {
@@ -410,6 +498,7 @@ function renderVideos() {
 }
 
 
+
 function setFilter(filter) {
   currentFilter =
     filter;
@@ -418,13 +507,15 @@ function setFilter(filter) {
     button => {
       button.classList.toggle(
         "active",
-        button.dataset.filter === filter
+        button.dataset.filter ===
+          filter
       );
     }
   );
 
   renderVideos();
 }
+
 
 
 filterButtons.forEach(
@@ -441,7 +532,10 @@ filterButtons.forEach(
 );
 
 
-function getYoutubeEmbedUrl(value) {
+
+function getYoutubeEmbedUrl(
+  value
+) {
   const id =
     getYoutubeId(value);
 
@@ -465,43 +559,61 @@ function getYoutubeEmbedUrl(value) {
 }
 
 
+
+/* =========================================
+   MÚSICA
+========================================= */
+
+
 function updateMusicButton() {
-  if (
-    !musicPlay ||
-    !backgroundAudio
-  ) {
+  if (!backgroundAudio) {
     return;
   }
 
-  musicPlay.textContent =
+  const symbol =
     backgroundAudio.paused
       ? "▶"
       : "❚❚";
+
+  if (musicPlay) {
+    musicPlay.textContent =
+      symbol;
+  }
+
+  if (musicMiniPlay) {
+    musicMiniPlay.textContent =
+      symbol;
+  }
 }
 
 
+
 function saveMusicState() {
-  if (!backgroundAudio) return;
+  if (!backgroundAudio) {
+    return;
+  }
 
   localStorage.setItem(
-    "babiTrack",
+    "babiMusicTrackV2",
     String(currentTrack)
   );
 
   localStorage.setItem(
-    "babiTime",
+    "babiMusicTimeV2",
     String(
-      backgroundAudio.currentTime || 0
+      backgroundAudio
+        .currentTime || 0
     )
   );
 
   localStorage.setItem(
-    "babiPlaying",
-    backgroundAudio.paused
-      ? "false"
-      : "true"
+    "babiMusicWantedV2",
+    musicDesiredPlaying
+      ? "true"
+      : "false"
   );
 }
+
 
 
 function loadMusic(
@@ -516,7 +628,8 @@ function loadMusic(
     (
       index +
       playlist.length
-    ) % playlist.length;
+    ) %
+    playlist.length;
 
   const track =
     playlist[currentTrack];
@@ -540,37 +653,46 @@ function loadMusic(
   }
 
   localStorage.setItem(
-    "babiTrack",
+    "babiMusicTrackV2",
     String(currentTrack)
   );
 
   if (restoreTime) {
+
     const savedTime =
       parseFloat(
         localStorage.getItem(
-          "babiTime"
+          "babiMusicTimeV2"
         ) || "0"
       );
 
-    backgroundAudio.addEventListener(
-      "loadedmetadata",
-      () => {
-        if (
-          savedTime > 0 &&
-          savedTime <
-            backgroundAudio.duration
-        ) {
-          backgroundAudio.currentTime =
-            savedTime;
+    backgroundAudio
+      .addEventListener(
+        "loadedmetadata",
+        () => {
+
+          if (
+            savedTime > 0 &&
+            savedTime <
+              backgroundAudio
+                .duration
+          ) {
+            backgroundAudio
+              .currentTime =
+              savedTime;
+          }
+
+        },
+        {
+          once: true
         }
-      },
-      {
-        once: true
-      }
-    );
-  } else {
+      );
+
+  }
+
+  else {
     localStorage.setItem(
-      "babiTime",
+      "babiMusicTimeV2",
       "0"
     );
   }
@@ -581,24 +703,32 @@ function loadMusic(
 }
 
 
+
 async function playMusic() {
   if (!backgroundAudio) {
     return;
   }
 
+  musicDesiredPlaying =
+    true;
+
+  localStorage.setItem(
+    "babiMusicWantedV2",
+    "true"
+  );
+
   try {
+
     await backgroundAudio.play();
 
-    localStorage.setItem(
-      "babiPlaying",
-      "true"
-    );
-
-    updateMusicButton();
-  } catch (error) {
-    updateMusicButton();
   }
+
+  catch (error) {
+  }
+
+  updateMusicButton();
 }
+
 
 
 function pauseMusic() {
@@ -606,123 +736,393 @@ function pauseMusic() {
     return;
   }
 
-  backgroundAudio.pause();
+  musicDesiredPlaying =
+    false;
 
   localStorage.setItem(
-    "babiPlaying",
+    "babiMusicWantedV2",
     "false"
   );
+
+  backgroundAudio.pause();
 
   updateMusicButton();
 }
 
 
-function nextMusic() {
+
+function nextMusic(
+  forcePlay = false
+) {
+  const shouldPlay =
+    forcePlay ||
+    musicDesiredPlaying;
+
   loadMusic(
     currentTrack + 1,
     false
   );
 
-  playMusic();
+  if (shouldPlay) {
+
+    backgroundAudio
+      ?.addEventListener(
+        "canplay",
+        () => {
+          playMusic();
+        },
+        {
+          once: true
+        }
+      );
+
+  }
 }
 
 
+
 function previousMusic() {
+  const shouldPlay =
+    musicDesiredPlaying;
+
   loadMusic(
     currentTrack - 1,
     false
   );
 
-  playMusic();
+  if (shouldPlay) {
+
+    backgroundAudio
+      ?.addEventListener(
+        "canplay",
+        () => {
+          playMusic();
+        },
+        {
+          once: true
+        }
+      );
+
+  }
 }
+
+
+
+function toggleMusic() {
+  if (!backgroundAudio) {
+    return;
+  }
+
+  if (
+    backgroundAudio.paused
+  ) {
+    playMusic();
+  }
+
+  else {
+    pauseMusic();
+  }
+}
+
+
+
+/* =========================================
+   PLAYER GRANDE / MINI
+========================================= */
+
+
+function showMiniPlayer() {
+  if (
+    !musicPlayer ||
+    !musicPlayerMini
+  ) {
+    return;
+  }
+
+  localStorage.setItem(
+    "babiMusicMinimizedV2",
+    "true"
+  );
+
+  musicPlayer.classList.add(
+    "is-fading-out"
+  );
+
+  setTimeout(
+    () => {
+
+      musicPlayer.classList.add(
+        "is-hidden"
+      );
+
+      musicPlayer.classList.remove(
+        "is-fading-out"
+      );
+
+      musicPlayerMini
+        .classList.remove(
+          "is-hidden"
+        );
+
+      musicPlayerMini
+        .classList.remove(
+          "is-rising"
+        );
+
+      musicPlayerMini
+        .classList.add(
+          "is-dropping"
+        );
+
+      setTimeout(
+        () => {
+          musicPlayerMini
+            .classList.remove(
+              "is-dropping"
+            );
+        },
+        350
+      );
+
+    },
+    180
+  );
+}
+
+
+
+function showMainPlayer() {
+  if (
+    !musicPlayer ||
+    !musicPlayerMini
+  ) {
+    return;
+  }
+
+  localStorage.setItem(
+    "babiMusicMinimizedV2",
+    "false"
+  );
+
+  musicPlayerMini
+    .classList.remove(
+      "is-dropping"
+    );
+
+  musicPlayerMini
+    .classList.add(
+      "is-rising"
+    );
+
+  setTimeout(
+    () => {
+
+      musicPlayerMini
+        .classList.add(
+          "is-hidden"
+        );
+
+      musicPlayerMini
+        .classList.remove(
+          "is-rising"
+        );
+
+      musicPlayer
+        .classList.remove(
+          "is-hidden"
+        );
+
+      musicPlayer
+        .classList.add(
+          "is-fading-in"
+        );
+
+      setTimeout(
+        () => {
+
+          musicPlayer
+            .classList.remove(
+              "is-fading-in"
+            );
+
+        },
+        300
+      );
+
+    },
+    230
+  );
+}
+
 
 
 musicPlay?.addEventListener(
   "click",
   event => {
+
     event.preventDefault();
+
     event.stopPropagation();
 
-    if (!backgroundAudio) {
-      return;
-    }
+    toggleMusic();
 
-    if (backgroundAudio.paused) {
-      playMusic();
-    } else {
-      pauseMusic();
-    }
   }
 );
+
+
+
+musicMiniPlay
+  ?.addEventListener(
+    "click",
+    event => {
+
+      event.preventDefault();
+
+      event.stopPropagation();
+
+      toggleMusic();
+
+    }
+  );
+
 
 
 musicNext?.addEventListener(
   "click",
   event => {
+
     event.preventDefault();
+
     event.stopPropagation();
 
     nextMusic();
+
   }
 );
+
+
+
+musicMiniNext
+  ?.addEventListener(
+    "click",
+    event => {
+
+      event.preventDefault();
+
+      event.stopPropagation();
+
+      nextMusic();
+
+    }
+  );
+
 
 
 musicPrev?.addEventListener(
   "click",
   event => {
+
     event.preventDefault();
+
     event.stopPropagation();
 
     previousMusic();
+
   }
 );
+
+
+
+musicMiniPrev
+  ?.addEventListener(
+    "click",
+    event => {
+
+      event.preventDefault();
+
+      event.stopPropagation();
+
+      previousMusic();
+
+    }
+  );
+
 
 
 musicClose?.addEventListener(
   "click",
   event => {
+
     event.preventDefault();
+
     event.stopPropagation();
 
-    pauseMusic();
+    showMiniPlayer();
 
-    musicPlayer?.classList.add(
-      "is-hidden"
-    );
   }
 );
 
 
-backgroundAudio?.addEventListener(
-  "ended",
-  () => {
-    nextMusic();
-  }
-);
+
+musicPlayerMini
+  ?.addEventListener(
+    "click",
+    event => {
+
+      if (
+        event.target.closest(
+          "button"
+        )
+      ) {
+        return;
+      }
+
+      showMainPlayer();
+
+    }
+  );
 
 
-backgroundAudio?.addEventListener(
-  "play",
-  () => {
-    updateMusicButton();
-  }
-);
+
+backgroundAudio
+  ?.addEventListener(
+    "ended",
+    () => {
+
+      nextMusic(true);
+
+    }
+  );
 
 
-backgroundAudio?.addEventListener(
-  "pause",
-  () => {
-    updateMusicButton();
-  }
-);
+
+backgroundAudio
+  ?.addEventListener(
+    "play",
+    updateMusicButton
+  );
 
 
-backgroundAudio?.addEventListener(
-  "timeupdate",
-  () => {
-    saveMusicState();
-  }
-);
+
+backgroundAudio
+  ?.addEventListener(
+    "pause",
+    updateMusicButton
+  );
+
+
+
+backgroundAudio
+  ?.addEventListener(
+    "timeupdate",
+    saveMusicState
+  );
+
+
+
+/* =========================================
+   VÍDEO
+========================================= */
 
 
 function openVideo(video) {
@@ -754,6 +1154,8 @@ function openVideo(video) {
     backgroundAudio
   ) {
     backgroundAudio.pause();
+
+    updateMusicButton();
   }
 
   modalInner.classList.toggle(
@@ -778,6 +1180,7 @@ function openVideo(video) {
 }
 
 
+
 function closeVideo() {
   if (
     !modal ||
@@ -787,11 +1190,13 @@ function closeVideo() {
     return;
   }
 
-  videoPlayer.src = "";
+  videoPlayer.src =
+    "";
 
-  modalInner.classList.remove(
-    "is-vertical"
-  );
+  modalInner
+    .classList.remove(
+      "is-vertical"
+    );
 
   modal.classList.remove(
     "open"
@@ -806,7 +1211,8 @@ function closeVideo() {
     "";
 
   if (
-    musicWasPlayingBeforeVideo
+    musicWasPlayingBeforeVideo &&
+    musicDesiredPlaying
   ) {
     playMusic();
   }
@@ -816,49 +1222,51 @@ function closeVideo() {
 }
 
 
-if (modalClose) {
-  modalClose.addEventListener(
+
+modalClose
+  ?.addEventListener(
     "click",
     closeVideo
   );
-}
 
 
-if (modal) {
-  modal.addEventListener(
+
+modal
+  ?.addEventListener(
     "click",
     event => {
+
       if (
         event.target === modal
       ) {
         closeVideo();
       }
+
     }
   );
-}
+
 
 
 document.addEventListener(
   "keydown",
   event => {
+
     if (
       event.key === "Escape" &&
-      modal?.classList.contains(
-        "open"
-      )
+      modal?.classList
+        .contains("open")
     ) {
       closeVideo();
     }
+
   }
 );
 
 
-window.addEventListener(
-  "beforeunload",
-  () => {
-    saveMusicState();
-  }
-);
+
+/* =========================================
+   INICIAR MÚSICA
+========================================= */
 
 
 loadMusic(
@@ -867,58 +1275,136 @@ loadMusic(
 );
 
 
-const shouldStartMusic =
+
+const isMinimized =
   localStorage.getItem(
-    "babiPlaying"
-  ) !== "false";
+    "babiMusicMinimizedV2"
+  ) === "true";
 
 
-function tryInitialMusic() {
-  if (
-    initialMusicUnlocked ||
-    !backgroundAudio ||
-    musicPlayer?.classList.contains(
+if (isMinimized) {
+
+  musicPlayer
+    ?.classList.add(
       "is-hidden"
-    )
+    );
+
+  musicPlayerMini
+    ?.classList.remove(
+      "is-hidden"
+    );
+
+}
+
+else {
+
+  musicPlayer
+    ?.classList.remove(
+      "is-hidden"
+    );
+
+  musicPlayerMini
+    ?.classList.add(
+      "is-hidden"
+    );
+
+}
+
+
+
+async function tryAutoplay() {
+  if (
+    !musicDesiredPlaying ||
+    !backgroundAudio
   ) {
     return;
   }
 
-  initialMusicUnlocked = true;
+  try {
+    await backgroundAudio.play();
+  }
 
-  playMusic();
+  catch (error) {
+  }
+
+  updateMusicButton();
 }
 
 
-if (shouldStartMusic) {
-  backgroundAudio?.addEventListener(
+
+backgroundAudio
+  ?.addEventListener(
     "canplay",
     () => {
-      playMusic();
+
+      tryAutoplay();
+
     },
     {
       once: true
     }
   );
 
-  playMusic();
 
-  document.addEventListener(
-    "pointerdown",
-    tryInitialMusic,
-    {
-      once: true
-    }
-  );
 
-  document.addEventListener(
-    "keydown",
-    tryInitialMusic,
-    {
-      once: true
-    }
-  );
+tryAutoplay();
+
+
+
+async function unlockAudio() {
+  if (
+    !musicDesiredPlaying ||
+    !backgroundAudio ||
+    !backgroundAudio.paused
+  ) {
+    return;
+  }
+
+  try {
+
+    await backgroundAudio.play();
+
+    updateMusicButton();
+
+    document
+      .removeEventListener(
+        "pointerdown",
+        unlockAudio
+      );
+
+    document
+      .removeEventListener(
+        "keydown",
+        unlockAudio
+      );
+
+  }
+
+  catch (error) {
+  }
 }
+
+
+
+document.addEventListener(
+  "pointerdown",
+  unlockAudio
+);
+
+
+
+document.addEventListener(
+  "keydown",
+  unlockAudio
+);
+
+
+
+window.addEventListener(
+  "beforeunload",
+  saveMusicState
+);
+
 
 
 renderVideos();
