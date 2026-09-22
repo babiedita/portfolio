@@ -1162,19 +1162,12 @@ main {
 
   overflow: hidden;
 
-  font-size:
-    clamp(
-      14px,
-      1.15vw,
-      18px
-    );
-
+  font-size: clamp(18px, 1.45vw, 24px);
   font-weight: 500;
 
   line-height: 1.05;
 
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
@@ -1183,15 +1176,9 @@ main {
 .video-subtitle {
   display: block;
 
-  margin-top: 3px;
+  margin-top: 5px;
 
-  font-size:
-    clamp(
-      9px,
-      .75vw,
-      12px
-    );
-
+  font-size: clamp(12px, .9vw, 15px);
   font-weight: 300;
 
   line-height: 1;
