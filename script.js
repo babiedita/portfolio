@@ -59,17 +59,17 @@ const videos = [
     id: 8,
     type: "longo",
     home: true,
-    title: "Vídeo Longform 02",
-    subtitle: "cliente",
-    youtube: "COLE_AQUI_O_LINK_DO_YOUTUBE_8"
+    title: "Não é RESIDENT EVIL... é melhor!",
+    subtitle: "primetek",
+    youtube: "https://www.youtube.com/watch?v=xZt5IvO3b84"
   },
   {
     id: 9,
     type: "longo",
     home: true,
-    title: "Vídeo Longform 03",
-    subtitle: "cliente",
-    youtube: "COLE_AQUI_O_LINK_DO_YOUTUBE_9"
+    title: "Levei um golpe: o que fazer agora?",
+    subtitle: "primetek",
+    youtube: "https://www.youtube.com/watch?v=YUgZadIt-sk"
   },
   {
     id: 10,
