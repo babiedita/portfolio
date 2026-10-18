@@ -72,6 +72,60 @@
 
 
 /* =========================================
+   BOTÃO HOME
+========================================= */
+
+.mural-home-button {
+  position: fixed;
+
+  z-index: 1250;
+
+  top: 104px;
+  left: 26px;
+
+  width: 52px;
+  height: auto;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  transform-origin: center;
+
+  transition:
+    transform .12s ease;
+}
+
+
+.mural-home-button img {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  pointer-events: none;
+
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+
+.mural-home-button:hover {
+  transform:
+    scale(1.045);
+}
+
+
+.mural-home-button.is-pressing {
+  transform:
+    scale(.92);
+}
+
+
+/* =========================================
    BOTÃO INFO
 ========================================= */
 
@@ -637,6 +691,9 @@
 ========================================= */
 
 body.is-loading
+.mural-home-button,
+
+body.is-loading
 .mural-info-button,
 
 body.is-loading
@@ -673,6 +730,14 @@ body.is-loading
         300px,
         72vw
       );
+  }
+
+
+  .mural-home-button {
+    top: 90px;
+    left: 14px;
+
+    width: 44px;
   }
 
 

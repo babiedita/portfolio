@@ -55,6 +55,17 @@ const muralEmpty =
     'muralEmpty'
   );
 
+const muralHomeButton =
+  document.getElementById(
+    'muralHomeButton'
+  );
+
+const muralHomeImage =
+  document.getElementById(
+    'muralHomeImage'
+  );
+
+
 const muralInfoButton =
   document.getElementById(
     'muralInfoButton'
@@ -86,6 +97,15 @@ const ESTIVE_AQUI_IMAGES = {
 
   pressed:
     'estive-aqui-2.png'
+};
+
+
+const HOME_IMAGES = {
+  normal:
+    'home-1.png',
+
+  pressed:
+    'home-2.png'
 };
 
 
@@ -644,6 +664,75 @@ muralSubmitButton?.addEventListener(
   'pointercancel',
   () => {
     setSubmitPressed(false);
+  }
+);
+
+
+/* =========================================
+   MECÂNICA BOTÃO HOME
+========================================= */
+
+function setHomePressed(
+  pressed
+) {
+  if (
+    !muralHomeButton ||
+    !muralHomeImage
+  ) {
+    return;
+  }
+
+
+  muralHomeButton.classList.toggle(
+    'is-pressing',
+    pressed
+  );
+
+
+  muralHomeImage.src =
+    pressed
+      ? HOME_IMAGES.pressed
+      : HOME_IMAGES.normal;
+}
+
+
+muralHomeButton?.addEventListener(
+  'pointerdown',
+  () => {
+    setHomePressed(true);
+  }
+);
+
+
+muralHomeButton?.addEventListener(
+  'pointerup',
+  () => {
+    setHomePressed(false);
+  }
+);
+
+
+muralHomeButton?.addEventListener(
+  'pointerleave',
+  () => {
+    setHomePressed(false);
+  }
+);
+
+
+muralHomeButton?.addEventListener(
+  'pointercancel',
+  () => {
+    setHomePressed(false);
+  }
+);
+
+
+muralHomeButton?.addEventListener(
+  'click',
+  () => {
+    window.location.href =
+      'index.html';
   }
 );
 

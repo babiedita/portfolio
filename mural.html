@@ -36,7 +36,7 @@
   <!-- CSS exclusivo do mural -->
   <link
     rel="stylesheet"
-    href="mural.css?v=1"
+    href="mural.css?v=2"
   >
 </head>
 
@@ -222,17 +222,29 @@
   <main class="mural-shell">
 
     <!-- TÍTULO FEITO POR VOCÊ -->
-    <a
-      href="index.html"
-      class="mural-title-link"
-      aria-label="Voltar para o portfólio"
-    >
+    <div class="mural-title-link">
       <img
         src="mural.png"
         alt="Mural"
         class="mural-title-image"
       >
-    </a>
+    </div>
+
+
+    <!-- BOTÃO HOME -->
+    <button
+      class="mural-home-button"
+      id="muralHomeButton"
+      type="button"
+      aria-label="Voltar para o portfólio"
+    >
+      <img
+        id="muralHomeImage"
+        src="home-1.png"
+        alt=""
+        draggable="false"
+      >
+    </button>
 
 
     <!-- BOTÃO INFO -->
@@ -379,7 +391,7 @@
   <script src="script.js?v=1500"></script>
 
   <!-- JS exclusivo do mural -->
-  <script src="mural.js?v=1"></script>
+  <script src="mural.js?v=2"></script>
 
 </body>
 
