@@ -121,8 +121,8 @@ const videos = [
   { id:6, order:1, type:'long', title:'MATEI 20 e PERDI de JETT!', subtitle:'marcafatal', youtube:'https://youtu.be/b_JcHN8aElA?si=Tt7XYVlBXdY5GvJU' },
   { id:7, order:2, type:'long', title:'Não é RESIDENT EVIL... é melhor!', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=xZt5IvO3b84' },
   { id:8, order:3, type:'long', title:'Levei um golpe: o que fazer agora?', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=YUgZadIt-sk' },
-  { id:12, order:4, type:'long', title:'SEM VENTOINHA e TELA EXPANSÍVEL??', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=DQR17wOj_A4' },
-  { id:10, order:5, type:'long', title:'Realmente vale a pena? Review', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=C1_3yK2diMs' },
+  { id:12, order:4, type:'long', title:'SEM VENTOINHA e TELA EXPANSÍVEL??', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=DQRl7wOj_A4&t=3s' },
+  { id:10, order:5, type:'long', title:'Realmente vale a pena? Review', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=Cl_3yK2diMs&t=2s' },
   { id:11, order:6, type:'long', title:'Starlink Mini Vale a Pena?', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=a0B47M5Lw_M' }
 ];
 
