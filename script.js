@@ -117,12 +117,13 @@ const videos = [
   { id:4, order:4, type:'short', title:'Pov: você tem refluxo com sons de arroto', subtitle:'levikingbr', youtube:'https://youtu.be/Iu6F89vnrkU?si=ZelhorLrSoMU1h3t' },
   { id:5, order:5, type:'short', title:'Pov: você jogou seu primeiro jogo de terror', subtitle:'levikingbr', youtube:'https://youtube.com/shorts/PEXLdziGxFk' },
   { id:9, order:2, type:'short', title:'Rifa do Pedroca e Camomilla', subtitle:'dev.pedroca', youtube:'https://www.youtube.com/shorts/D3oh7QUdeeE' },
+
   { id:6, order:1, type:'long', title:'MATEI 20 e PERDI de JETT!', subtitle:'marcafatal', youtube:'https://youtu.be/b_JcHN8aElA?si=Tt7XYVlBXdY5GvJU' },
   { id:7, order:2, type:'long', title:'Não é RESIDENT EVIL... é melhor!', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=xZt5IvO3b84' },
-  { id:8, order:3, type:'long', title:'Levei um golpe: o que fazer agora?', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=YUgZadIt-sk' }
-   { id:9, order:4, type:'long', title:'SEM VENTOINHA e TELA EXPANSÍVEL??', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=DQRl7wOj_A4' }
-{ id:10, order:5, type:'long', title:'Realmente vale a pena? Review', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=Cl_3yK2diMs' }
-{ id:11, order:6, type:'long', title:'Starlink Mini Vale a Pena?', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=a0B47M5Lw_M' }
+  { id:8, order:3, type:'long', title:'Levei um golpe: o que fazer agora?', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=YUgZadIt-sk' },
+  { id:12, order:4, type:'long', title:'SEM VENTOINHA e TELA EXPANSÍVEL??', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=DQR17wOj_A4' },
+  { id:10, order:5, type:'long', title:'Realmente vale a pena? Review', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=C1_3yK2diMs' },
+  { id:11, order:6, type:'long', title:'Starlink Mini Vale a Pena?', subtitle:'primetek', youtube:'https://www.youtube.com/watch?v=a0B47M5Lw_M' }
 ];
 
 const tutorialVideos = [
