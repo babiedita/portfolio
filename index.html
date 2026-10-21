@@ -13,6 +13,7 @@
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="https://use.typekit.net/ndv3lae.css">
   <link rel="stylesheet" href="style.css?v=1400">
+  <link rel="stylesheet" href="thumbs.css?v=1">
 </head>
 <body>
   <div class="site-loader" id="siteLoader">
@@ -96,6 +97,80 @@
         <div class="project-footnote"><span>Formatos diferentes. A mesma vontade de contar uma boa história.</span><span aria-hidden="true">＋</span></div>
       </section>
 
+
+      <section class="thumbs-section page-width" id="thumbs" aria-labelledby="thumbs-title">
+        <div class="section-eyebrow thumbs-eyebrow">
+          <span>02 / THUMBNAILS</span>
+        </div>
+
+        <div class="thumbs-heading">
+          <h2 id="thumbs-title">Thumbnails<span class="title-dot">.</span></h2>
+        </div>
+
+        <!-- ANTES E DEPOIS EM DESTAQUE -->
+        <div
+          class="thumb-compare"
+          id="thumbCompare"
+          style="--split: 50%;"
+          aria-label="Comparação antes e depois de uma thumbnail"
+        >
+          <img
+            class="thumb-compare-image thumb-compare-before"
+            src="thumbs/antes.jpg"
+            alt="Thumbnail antes da edição"
+            draggable="false"
+          >
+
+          <div class="thumb-compare-after-wrap" aria-hidden="true">
+            <img
+              class="thumb-compare-image thumb-compare-after"
+              src="thumbs/depois.jpg"
+              alt=""
+              draggable="false"
+            >
+          </div>
+
+          <span class="thumb-compare-label thumb-compare-label-before">antes</span>
+          <span class="thumb-compare-label thumb-compare-label-after">depois</span>
+
+          <div class="thumb-compare-divider" aria-hidden="true">
+            <span class="thumb-compare-handle">
+              <span>‹</span>
+              <span>›</span>
+            </span>
+          </div>
+
+          <input
+            class="thumb-compare-range"
+            id="thumbCompareRange"
+            type="range"
+            min="0"
+            max="100"
+            value="50"
+            aria-label="Arraste para comparar antes e depois"
+          >
+        </div>
+
+        <!-- RESTANTE DAS THUMBS -->
+        <div class="thumbs-grid">
+          <figure class="thumb-card">
+            <img src="thumbs/thumb-1.jpg" alt="Thumbnail 1" loading="lazy">
+          </figure>
+
+          <figure class="thumb-card">
+            <img src="thumbs/thumb-2.jpg" alt="Thumbnail 2" loading="lazy">
+          </figure>
+
+          <figure class="thumb-card">
+            <img src="thumbs/thumb-3.jpg" alt="Thumbnail 3" loading="lazy">
+          </figure>
+
+          <figure class="thumb-card">
+            <img src="thumbs/thumb-4.jpg" alt="Thumbnail 4" loading="lazy">
+          </figure>
+        </div>
+      </section>
+
       <div id="contato" class="contact-anchor" aria-hidden="true"></div>
     </main>
   </div>
@@ -109,5 +184,6 @@
   </div>
 
   <script src="script.js?v=1400"></script>
+  <script src="thumbs.js?v=1"></script>
 </body>
 </html>

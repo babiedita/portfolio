@@ -1,0 +1,295 @@
+/* =========================================
+   THUMBNAILS — HOME
+========================================= */
+
+.thumbs-section {
+  padding-top: 34px;
+  padding-bottom: 78px;
+}
+
+.thumbs-eyebrow {
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.thumbs-heading {
+  margin: 22px 0 26px;
+}
+
+.thumbs-heading h2 {
+  margin: 0;
+}
+
+
+/* =========================================
+   ANTES / DEPOIS — PRIMEIRO E GRANDE
+========================================= */
+
+.thumb-compare {
+  --split: 50%;
+
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  margin-bottom: 24px;
+
+  overflow: hidden;
+  border-radius: 7px;
+  background: #ededed;
+
+  isolation: isolate;
+
+  user-select: none;
+  -webkit-user-select: none;
+
+  touch-action: pan-y;
+}
+
+.thumb-compare-image {
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+  max-width: none;
+
+  object-fit: cover;
+
+  pointer-events: none;
+}
+
+.thumb-compare-before {
+  z-index: 1;
+}
+
+.thumb-compare-after-wrap {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+
+  overflow: hidden;
+
+  clip-path: inset(0 0 0 var(--split));
+  will-change: clip-path;
+
+  pointer-events: none;
+}
+
+.thumb-compare-after {
+  position: absolute;
+  inset: 0;
+}
+
+.thumb-compare-divider {
+  position: absolute;
+  z-index: 4;
+
+  top: 0;
+  bottom: 0;
+  left: var(--split);
+
+  width: 2px;
+
+  background: rgba(255,255,255,.96);
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.07);
+
+  transform: translateX(-1px);
+
+  pointer-events: none;
+}
+
+.thumb-compare-handle {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  border: 1px solid rgba(43,43,43,.10);
+  border-radius: 50%;
+
+  background: rgba(255,255,255,.96);
+  color: var(--foreground);
+
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.12);
+
+  transform: translate(-50%, -50%);
+
+  font-family: Arial, sans-serif;
+  font-size: 27px;
+  line-height: 1;
+}
+
+.thumb-compare-label {
+  position: absolute;
+  z-index: 5;
+
+  top: 18px;
+
+  padding: 7px 11px;
+
+  border-radius: 999px;
+
+  background: rgba(255,255,255,.92);
+  color: var(--foreground);
+
+  box-shadow:
+    0 4px 14px rgba(0,0,0,.06);
+
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 1;
+
+  pointer-events: none;
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.thumb-compare-label-before {
+  left: 18px;
+}
+
+.thumb-compare-label-after {
+  right: 18px;
+}
+
+.thumb-compare-range {
+  position: absolute;
+  z-index: 6;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+
+  opacity: 0;
+
+  cursor:
+    url("cursor-hand.png")
+    0 0,
+    ew-resize !important;
+}
+
+.thumb-compare-range:active {
+  cursor:
+    url("cursor-wait.png")
+    0 0,
+    ew-resize !important;
+}
+
+
+/* =========================================
+   GRADE DAS OUTRAS THUMBS
+========================================= */
+
+.thumbs-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 24px;
+}
+
+.thumb-card {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  margin: 0;
+
+  overflow: hidden;
+
+  border-radius: 7px;
+
+  background: #ededed;
+
+  isolation: isolate;
+}
+
+.thumb-card img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transform: scale(1.005);
+
+  transition:
+    transform .35s ease;
+}
+
+.thumb-card:hover img {
+  transform:
+    scale(1.035);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .thumbs-section {
+    padding-top: 28px;
+    padding-bottom: 56px;
+  }
+
+  .thumb-compare {
+    margin-bottom: 18px;
+    border-radius: 6px;
+  }
+
+  .thumbs-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .thumb-card {
+    border-radius: 6px;
+  }
+
+  .thumb-compare-handle {
+    width: 42px;
+    height: 42px;
+
+    font-size: 23px;
+  }
+
+  .thumb-compare-label {
+    top: 12px;
+
+    padding: 6px 9px;
+
+    font-size: 10px;
+  }
+
+  .thumb-compare-label-before {
+    left: 12px;
+  }
+
+  .thumb-compare-label-after {
+    right: 12px;
+  }
+}
