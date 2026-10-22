@@ -293,3 +293,55 @@
     right: 12px;
   }
 }
+
+
+/* =========================================
+   JUXTAPOSE — HANDLE ET
+========================================= */
+
+.thumb-compare-handle {
+  width: 74px;
+  height: auto;
+
+  display: block;
+
+  border: 0;
+  border-radius: 0;
+
+  background: transparent;
+
+  box-shadow: none;
+
+  color: transparent;
+
+  pointer-events: none;
+}
+
+.thumb-compare-handle img {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  max-width: none;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 7px 13px
+      rgba(0,0,0,.12)
+    );
+
+  pointer-events: none;
+
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+@media (max-width: 700px) {
+  .thumb-compare-handle {
+    width: 58px;
+    height: auto;
+  }
+}
