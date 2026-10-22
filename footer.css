@@ -21,7 +21,7 @@
 .site-footer-wave {
   display: block;
   width: 100%;
-  height: 110px;
+  height: 72px;
   margin-bottom: -1px;
   color: #6bbc0e;
 }
@@ -110,7 +110,7 @@
   }
 
   .site-footer-wave {
-    height: 72px;
+    height: 52px;
   }
 
   .site-footer-body {
