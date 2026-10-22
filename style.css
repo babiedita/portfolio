@@ -45,3 +45,42 @@ html,body,body *{cursor:url("cursor-arrow.png") 0 0,auto}a,button,.project-cover
 @keyframes likePop{0%{transform:rotate(-3deg) scale(.94)}55%{transform:rotate(2deg) scale(1.10)}100%{transform:rotate(-3deg) scale(1)}}
 body.is-loading .like-button{opacity:0;pointer-events:none}
 @media(max-width:700px){.like-button{left:14px;bottom:14px;width:110px}}
+
+/* =========================================
+   SCROLLBAR — TRACINHO VERDE
+========================================= */
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #6bbc0e transparent;
+}
+
+/* Chrome, Edge e Opera */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6bbc0e;
+
+  border: 2px solid transparent;
+  border-radius: 999px;
+
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6bbc0e;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
