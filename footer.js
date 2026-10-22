@@ -17,8 +17,31 @@
       return;
     }
 
-    const footerTop =
-      footer.getBoundingClientRect().top;
+    const footerRect =
+      footer.getBoundingClientRect();
+
+    const footerWave =
+      footer.querySelector(
+        '.site-footer-wave'
+      );
+
+    /*
+      A curva SVG começa antes da área verde real.
+      Como o botão Curtir fica na esquerda, usamos
+      aproximadamente o ponto da curva nessa região,
+      em vez do topo inteiro do footer.
+    */
+    let greenBoundary =
+      footerRect.top;
+
+    if (footerWave) {
+      const waveRect =
+        footerWave.getBoundingClientRect();
+
+      greenBoundary =
+        waveRect.top +
+        waveRect.height * 0.74;
+    }
 
     const buttonStyle =
       window.getComputedStyle(
@@ -38,7 +61,7 @@
       Math.max(
         0,
         normalButtonBottom -
-        footerTop +
+        greenBoundary +
         likeGap
       );
 
