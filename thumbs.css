@@ -345,3 +345,42 @@
     height: auto;
   }
 }
+
+
+/* =========================================
+   TEXTO DE AJUDA — JUXTAPOSE
+========================================= */
+
+.thumbs-drag-hint {
+  margin:
+    -8px 0
+    12px;
+
+  text-align: right;
+
+  color:
+    var(--muted-foreground);
+
+  font-family:
+    var(--display-font);
+
+  font-size: 14px;
+  font-weight: 300;
+
+  line-height: 1.2;
+}
+
+.thumbs-drag-hint span {
+  color:
+    #6bbc0e;
+}
+
+@media (max-width: 700px) {
+  .thumbs-drag-hint {
+    margin:
+      -4px 0
+      10px;
+
+    font-size: 13px;
+  }
+}
