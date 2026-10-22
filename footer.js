@@ -92,6 +92,7 @@
 
   let isDragging = false;
   let dragOffsetY = 0;
+  let previousScrollBehavior = '';
 
 
   function documentHeight() {
@@ -403,14 +404,28 @@
       ) /
       travel;
 
-    window.scrollTo({
-      top:
-        progress *
-        currentMaxScroll,
+    const targetScroll =
+      progress *
+      currentMaxScroll;
 
-      behavior:
-        'auto'
-    });
+    currentThumbTop =
+      clampedTop;
+
+    thumb.style.top =
+      `${clampedTop}px`;
+
+    thumb.style.setProperty(
+      '--thumb-bg',
+      makeAdaptiveGradient(
+        clampedTop,
+        currentThumbHeight
+      )
+    );
+
+    window.scrollTo(
+      0,
+      targetScroll
+    );
   }
 
 
@@ -424,6 +439,12 @@
       }
 
       isDragging = true;
+
+      previousScrollBehavior =
+        root.style.scrollBehavior;
+
+      root.style.scrollBehavior =
+        'auto';
 
       thumb.classList.add(
         'is-dragging'
@@ -467,6 +488,9 @@
     }
 
     isDragging = false;
+
+    root.style.scrollBehavior =
+      previousScrollBehavior;
 
     thumb.classList.remove(
       'is-dragging'
