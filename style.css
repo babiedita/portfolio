@@ -47,40 +47,54 @@ body.is-loading .like-button{opacity:0;pointer-events:none}
 @media(max-width:700px){.like-button{left:14px;bottom:14px;width:110px}}
 
 /* =========================================
-   SCROLLBAR — TRACINHO VERDE
+   SCROLLBAR CUSTOM — SÓ O TRACINHO
 ========================================= */
 
-/* Firefox */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: #6bbc0e transparent;
+/*
+  A scrollbar nativa some apenas nas páginas
+  em que footer.js ativar a nossa scrollbar.
+  Assim outras páginas do site continuam seguras.
+*/
+
+html.custom-scrollbar-active {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/* Chrome, Edge e Opera */
-::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+html.custom-scrollbar-active::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+.custom-scrollbar-thumb {
+  position: fixed;
 
-::-webkit-scrollbar-thumb {
-  background: #6bbc0e;
+  z-index: 2147483000;
 
-  border: 2px solid transparent;
+  top: 6px;
+  right: 2px;
+
+  width: 4px;
+  min-height: 36px;
+
+  border: 0;
   border-radius: 999px;
 
-  background-clip: padding-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
   background: #6bbc0e;
-  background-clip: padding-box;
+
+  pointer-events: none;
+
+  will-change:
+    top,
+    height,
+    background;
 }
 
-::-webkit-scrollbar-corner {
-  background: transparent;
+@media (max-width: 700px) {
+  .custom-scrollbar-thumb {
+    right: 1px;
+    width: 3px;
+  }
 }
 
