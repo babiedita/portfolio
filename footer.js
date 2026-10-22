@@ -85,6 +85,15 @@
     '#ffffff';
 
 
+  let currentThumbTop = TRACK_GAP;
+  let currentThumbHeight = MIN_THUMB;
+  let currentTrackHeight = 1;
+  let currentMaxScroll = 0;
+
+  let isDragging = false;
+  let dragOffsetY = 0;
+
+
   function documentHeight() {
     return Math.max(
       document.body.scrollHeight,
@@ -107,7 +116,10 @@
 
     for (const element of elements) {
       if (
-        element === thumb
+        element === thumb ||
+        element.closest?.(
+          '.custom-scrollbar-thumb'
+        )
       ) {
         continue;
       }
@@ -276,6 +288,9 @@
         viewport
       );
 
+    currentMaxScroll =
+      maxScroll;
+
     if (
       maxScroll <= 1
     ) {
@@ -295,6 +310,9 @@
         TRACK_GAP * 2
       );
 
+    currentTrackHeight =
+      trackHeight;
+
     const proportionalHeight =
       (
         viewport /
@@ -310,6 +328,9 @@
           proportionalHeight
         )
       );
+
+    currentThumbHeight =
+      thumbHeight;
 
     const travel =
       Math.max(
@@ -333,23 +354,148 @@
       progress *
       travel;
 
+    currentThumbTop =
+      top;
+
     thumb.style.top =
       `${top}px`;
 
     thumb.style.height =
       `${thumbHeight}px`;
 
-    /*
-      A própria linha troca de cor por trechos:
-      verde sobre branco e branca exatamente
-      quando passa pela área verde do rodapé.
-    */
-    thumb.style.background =
+    thumb.style.setProperty(
+      '--thumb-bg',
       makeAdaptiveGradient(
         top,
         thumbHeight
-      );
+      )
+    );
   }
+
+
+  /* =========================================
+     ARRASTAR COM O MOUSE / TOQUE
+  ========================================= */
+
+  function scrollFromThumbTop(
+    desiredTop
+  ) {
+    const travel =
+      Math.max(
+        1,
+        currentTrackHeight -
+        currentThumbHeight
+      );
+
+    const clampedTop =
+      Math.min(
+        TRACK_GAP + travel,
+        Math.max(
+          TRACK_GAP,
+          desiredTop
+        )
+      );
+
+    const progress =
+      (
+        clampedTop -
+        TRACK_GAP
+      ) /
+      travel;
+
+    window.scrollTo({
+      top:
+        progress *
+        currentMaxScroll,
+
+      behavior:
+        'auto'
+    });
+  }
+
+
+  thumb.addEventListener(
+    'pointerdown',
+    (event) => {
+      if (
+        currentMaxScroll <= 1
+      ) {
+        return;
+      }
+
+      isDragging = true;
+
+      thumb.classList.add(
+        'is-dragging'
+      );
+
+      dragOffsetY =
+        event.clientY -
+        currentThumbTop;
+
+      thumb.setPointerCapture?.(
+        event.pointerId
+      );
+
+      event.preventDefault();
+    }
+  );
+
+
+  thumb.addEventListener(
+    'pointermove',
+    (event) => {
+      if (!isDragging) {
+        return;
+      }
+
+      scrollFromThumbTop(
+        event.clientY -
+        dragOffsetY
+      );
+
+      event.preventDefault();
+    }
+  );
+
+
+  function stopDragging(
+    event
+  ) {
+    if (!isDragging) {
+      return;
+    }
+
+    isDragging = false;
+
+    thumb.classList.remove(
+      'is-dragging'
+    );
+
+    if (
+      event?.pointerId !==
+      undefined
+    ) {
+      try {
+        thumb.releasePointerCapture?.(
+          event.pointerId
+        );
+      } catch {
+        /* sem problema */
+      }
+    }
+  }
+
+
+  thumb.addEventListener(
+    'pointerup',
+    stopDragging
+  );
+
+  thumb.addEventListener(
+    'pointercancel',
+    stopDragging
+  );
 
 
   /* =========================================

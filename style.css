@@ -47,14 +47,8 @@ body.is-loading .like-button{opacity:0;pointer-events:none}
 @media(max-width:700px){.like-button{left:14px;bottom:14px;width:110px}}
 
 /* =========================================
-   SCROLLBAR CUSTOM — SÓ O TRACINHO
+   SCROLLBAR CUSTOM — TRACINHO ARRASTÁVEL
 ========================================= */
-
-/*
-  A scrollbar nativa some apenas nas páginas
-  em que footer.js ativar a nossa scrollbar.
-  Assim outras páginas do site continuam seguras.
-*/
 
 html.custom-scrollbar-active {
   scrollbar-width: none;
@@ -67,32 +61,72 @@ html.custom-scrollbar-active::-webkit-scrollbar {
   display: none;
 }
 
+/*
+  A área clicável é mais larga que o tracinho,
+  mas visualmente continuam aparecendo só 4px.
+*/
 .custom-scrollbar-thumb {
+  --thumb-bg: #6bbc0e;
+
   position: fixed;
 
   z-index: 2147483000;
 
   top: 6px;
-  right: 2px;
+  right: 0;
 
-  width: 4px;
+  width: 16px;
   min-height: 36px;
 
-  border: 0;
-  border-radius: 999px;
+  background: transparent;
 
-  background: #6bbc0e;
+  pointer-events: auto;
 
-  pointer-events: none;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+
+  cursor:
+    url("cursor-hand.png")
+    0 0,
+    grab;
 
   will-change:
     top,
-    height,
-    background;
+    height;
+}
+
+.custom-scrollbar-thumb::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  right: 2px;
+  bottom: 0;
+
+  width: 4px;
+
+  border-radius: 999px;
+
+  background: var(--thumb-bg);
+
+  pointer-events: none;
+}
+
+.custom-scrollbar-thumb.is-dragging {
+  cursor:
+    url("cursor-wait.png")
+    0 0,
+    grabbing;
 }
 
 @media (max-width: 700px) {
   .custom-scrollbar-thumb {
+    width: 14px;
+  }
+
+  .custom-scrollbar-thumb::before {
     right: 1px;
     width: 3px;
   }
