@@ -32,6 +32,17 @@
   color: #ffffff;
 }
 
+
+.site-footer-inner.page-width {
+  width: 100%;
+  max-width: none;
+
+  margin-inline: 0;
+
+  padding-left: 72px;
+  padding-right: 72px;
+}
+
 .site-footer-inner {
   min-height: 118px;
 
@@ -111,6 +122,13 @@
 ========================================= */
 
 @media (max-width: 700px) {
+
+
+  .site-footer-inner.page-width {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
 
   .site-footer {
     margin-top: 50px;
