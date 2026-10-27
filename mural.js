@@ -1218,6 +1218,11 @@ muralTicketForm?.addEventListener(
 
 
     if (!type) {
+      if (muralTicketFeedback) {
+        muralTicketFeedback.textContent =
+          'escolhe uma opção primeiro';
+      }
+
       return;
     }
 
@@ -1242,6 +1247,36 @@ muralTicketForm?.addEventListener(
         ?.trim() || '';
 
 
+    if (
+      type === 'escrevi_errado' &&
+      !correctVersion
+    ) {
+      if (muralTicketFeedback) {
+        muralTicketFeedback.textContent =
+          'preenche a versão correta';
+      }
+
+      muralTicketCorrect?.focus();
+
+      return;
+    }
+
+
+    if (
+      type === 'outro_problema' &&
+      !problemDescription
+    ) {
+      if (muralTicketFeedback) {
+        muralTicketFeedback.textContent =
+          'descreve o problema';
+      }
+
+      muralTicketProblem?.focus();
+
+      return;
+    }
+
+
     muralTicketSubmit.disabled =
       true;
 
@@ -1252,72 +1287,54 @@ muralTicketForm?.addEventListener(
     }
 
 
-    const payload =
-      new URLSearchParams();
+    const controller =
+      new AbortController();
 
 
-    payload.set(
-      'email',
-      email
-    );
+    const timeoutId =
+      window.setTimeout(
+        () => {
+          controller.abort();
+        },
+        12000
+      );
 
 
-    payload.set(
-      '_replyto',
-      email
-    );
+    const payload = {
+      email,
 
+      _replyto:
+        email,
 
-    payload.set(
-      '_subject',
-      type ===
-        'escrevi_errado'
-        ? 'Ticket do mural — correção de nick'
-        : 'Ticket do mural — outro problema'
-    );
+      _subject:
+        type ===
+          'escrevi_errado'
+          ? 'Ticket do mural — correção de nick'
+          : 'Ticket do mural — outro problema',
 
+      _template:
+        'table',
 
-    payload.set(
-      '_template',
-      'table'
-    );
+      tipo:
+        type ===
+          'escrevi_errado'
+          ? 'escrevi errado'
+          : 'outro problema',
 
+      nick_atual:
+        currentNick,
 
-    payload.set(
-      '_captcha',
-      'false'
-    );
-
-
-    payload.set(
-      '_honey',
-      muralTicketHoney?.value || ''
-    );
-
-
-    payload.set(
-      'tipo',
-      type ===
-        'escrevi_errado'
-        ? 'escrevi errado'
-        : 'outro problema'
-    );
-
-
-    payload.set(
-      'nick_atual',
-      currentNick
-    );
+      pagina:
+        window.location.href
+    };
 
 
     if (
       type ===
       'escrevi_errado'
     ) {
-      payload.set(
-        'versao_correta',
-        correctVersion
-      );
+      payload.versao_correta =
+        correctVersion;
     }
 
 
@@ -1325,17 +1342,9 @@ muralTicketForm?.addEventListener(
       type ===
       'outro_problema'
     ) {
-      payload.set(
-        'descricao_problema',
-        problemDescription
-      );
+      payload.descricao_problema =
+        problemDescription;
     }
-
-
-    payload.set(
-      'pagina',
-      window.location.href
-    );
 
 
     try {
@@ -1347,20 +1356,42 @@ muralTicketForm?.addEventListener(
 
             headers: {
               'Content-Type':
-                'application/x-www-form-urlencoded;charset=UTF-8',
+                'application/json',
 
               'Accept':
                 'application/json'
             },
 
             body:
-              payload.toString()
+              JSON.stringify(
+                payload
+              ),
+
+            signal:
+              controller.signal
           }
         );
 
 
+      window.clearTimeout(
+        timeoutId
+      );
+
+
+      let data = null;
+
+      try {
+        data =
+          await response.json();
+      }
+      catch {
+        data = null;
+      }
+
+
       if (!response.ok) {
         throw new Error(
+          data?.message ||
           'ticket request failed'
         );
       }
@@ -1380,6 +1411,11 @@ muralTicketForm?.addEventListener(
     }
 
     catch (error) {
+      window.clearTimeout(
+        timeoutId
+      );
+
+
       console.error(
         'Erro ao enviar ticket:',
         error
@@ -1388,7 +1424,10 @@ muralTicketForm?.addEventListener(
 
       if (muralTicketFeedback) {
         muralTicketFeedback.textContent =
-          'não consegui enviar agora :(';
+          error?.name ===
+            'AbortError'
+            ? 'demorou demais, tenta de novo'
+            : 'não consegui enviar agora :(';
       }
     }
 
@@ -1399,6 +1438,7 @@ muralTicketForm?.addEventListener(
 
   }
 );
+
 
 
 /* =========================================

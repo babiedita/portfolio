@@ -1443,3 +1443,34 @@ body.is-loading
     font-size: 13px;
   }
 }
+
+
+/* =========================================
+   AUTOFILL — MANTER O MESMO VISUAL
+========================================= */
+
+.mural-ticket-input,
+.mural-ticket-input:-webkit-autofill,
+.mural-ticket-input:-webkit-autofill:hover,
+.mural-ticket-input:-webkit-autofill:focus,
+.mural-ticket-input:-webkit-autofill:active {
+  background: rgba(255,255,255,.92) !important;
+  color: #6f6f6f !important;
+
+  -webkit-text-fill-color: #6f6f6f !important;
+
+  -webkit-box-shadow:
+    0 0 0 1000px
+    rgba(255,255,255,.92)
+    inset !important;
+
+  box-shadow:
+    0 0 0 1000px
+    rgba(255,255,255,.92)
+    inset !important;
+
+  caret-color: #6f6f6f !important;
+
+  transition:
+    background-color 99999s ease-out 0s;
+}
