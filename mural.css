@@ -1240,3 +1240,81 @@ body.is-loading
   }
 
 }
+
+
+/* =========================================
+   AJUSTES FINAIS — INFO/TICKET
+========================================= */
+
+.mural-info-close {
+  display: none !important;
+}
+
+/* textos gerais um pouco maiores */
+.mural-info-box p {
+  font-size: 16px;
+  line-height: 1.48;
+}
+
+.mural-info-box .mural-ticket-intro {
+  font-size: 16px;
+}
+
+.mural-ticket-label,
+.mural-ticket-options legend {
+  font-size: 13px;
+  letter-spacing: .75px;
+}
+
+/* opção NÃO selecionada: cinza */
+.mural-ticket-option span {
+  color: #7a7a7a;
+  background: rgba(255,255,255,.92);
+  font-size: 14px;
+  letter-spacing: .3px;
+}
+
+/* opção selecionada: verde + branco */
+.mural-ticket-option input:checked + span {
+  border-color: #6bbc0e;
+  background: #6bbc0e;
+  color: #ffffff;
+}
+
+/* inputs/textarea um pouco maiores */
+.mural-ticket-input {
+  font-size: 16px;
+}
+
+/* botão um pouco maior */
+.mural-ticket-submit {
+  font-size: 16px;
+  min-height: 46px;
+}
+
+/* feedback mais legível */
+.mural-ticket-feedback {
+  font-size: 13px !important;
+}
+
+/* mobile */
+@media (max-width: 700px) {
+  .mural-info-box p,
+  .mural-info-box .mural-ticket-intro {
+    font-size: 15px;
+  }
+
+  .mural-ticket-label,
+  .mural-ticket-options legend {
+    font-size: 12.5px;
+  }
+
+  .mural-ticket-option span {
+    font-size: 13px;
+  }
+
+  .mural-ticket-input,
+  .mural-ticket-submit {
+    font-size: 15px;
+  }
+}
