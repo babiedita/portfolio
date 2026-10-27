@@ -36,7 +36,7 @@
   <!-- CSS exclusivo do mural -->
   <link
     rel="stylesheet"
-    href="mural.css?v=2"
+    href="mural.css?v=4"
   >
 </head>
 
@@ -340,9 +340,7 @@
 
 
   <!-- =====================================
-       CAIXINHA DE INFORMAÇÃO
-       depois podemos trocar este conteúdo
-       pela imagem que você ainda vai criar
+       INFO + TICKET
   ====================================== -->
 
   <div
@@ -367,22 +365,156 @@
         ×
       </button>
 
-      <h2 id="muralInfoTitle">
-        estive aqui!
-      </h2>
+      <div class="mural-info-content">
 
-      <p>
-        Esse é um cantinho pra quem passou pelo meu portfólio deixar uma marquinha.
-      </p>
+        <h2 id="muralInfoTitle">
+          estive aqui!
+        </h2>
 
-      <p>
-        Você pode escrever seu nome ou nick uma vez por navegador. Assim que enviar, ele aparece no mural.
-      </p>
+        <p>
+          Esse é um cantinho pra quem passou pelo meu portfólio deixar uma marquinha.
+        </p>
+
+        <p>
+          Você pode escrever seu nome ou nick uma vez por navegador. Assim que enviar, ele aparece no mural.
+        </p>
+
+        <div class="mural-ticket-divider" aria-hidden="true"></div>
+
+        <p class="mural-ticket-intro">
+          Escreveu errado ou teve algum outro tipo de problema?
+          <strong>Manda um ticket ;)</strong>
+        </p>
+
+        <form
+          class="mural-ticket-form"
+          id="muralTicketForm"
+          autocomplete="off"
+        >
+
+          <input
+            type="hidden"
+            id="muralTicketNick"
+            name="nick_atual"
+            value=""
+          >
+
+          <label
+            class="mural-ticket-label"
+            for="muralTicketEmail"
+          >
+            email
+          </label>
+
+          <input
+            class="mural-ticket-input"
+            id="muralTicketEmail"
+            name="email"
+            type="email"
+            placeholder="seuemail@email.com"
+            autocomplete="email"
+            required
+          >
+
+          <fieldset class="mural-ticket-options">
+            <legend>
+              o que aconteceu?
+            </legend>
+
+            <label class="mural-ticket-option">
+              <input
+                type="radio"
+                name="ticketType"
+                value="escrevi_errado"
+                required
+              >
+              <span>escrevi errado</span>
+            </label>
+
+            <label class="mural-ticket-option">
+              <input
+                type="radio"
+                name="ticketType"
+                value="outro_problema"
+                required
+              >
+              <span>outro problema</span>
+            </label>
+          </fieldset>
+
+          <div
+            class="mural-ticket-panel"
+            id="muralTicketCorrectPanel"
+            hidden
+          >
+            <label
+              class="mural-ticket-label"
+              for="muralTicketCorrect"
+            >
+              versão correta
+            </label>
+
+            <input
+              class="mural-ticket-input"
+              id="muralTicketCorrect"
+              name="versao_correta"
+              type="text"
+              maxlength="24"
+              placeholder="como deveria estar escrito?"
+            >
+          </div>
+
+          <div
+            class="mural-ticket-panel"
+            id="muralTicketProblemPanel"
+            hidden
+          >
+            <label
+              class="mural-ticket-label"
+              for="muralTicketProblem"
+            >
+              descreva o problema
+            </label>
+
+            <textarea
+              class="mural-ticket-input mural-ticket-textarea"
+              id="muralTicketProblem"
+              name="descricao_problema"
+              maxlength="500"
+              placeholder="me conta o que aconteceu..."
+            ></textarea>
+          </div>
+
+          <input
+            class="mural-ticket-honey"
+            id="muralTicketHoney"
+            type="text"
+            name="_honey"
+            tabindex="-1"
+            autocomplete="off"
+          >
+
+          <button
+            class="mural-ticket-submit"
+            id="muralTicketSubmit"
+            type="submit"
+          >
+            enviar ticket
+          </button>
+
+          <p
+            class="mural-ticket-feedback"
+            id="muralTicketFeedback"
+            aria-live="polite"
+          ></p>
+
+        </form>
+
+      </div>
 
     </div>
 
   </div>
-
 
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -391,7 +523,7 @@
   <script src="script.js?v=1500"></script>
 
   <!-- JS exclusivo do mural -->
-  <script src="mural.js?v=2"></script>
+  <script src="mural.js?v=4"></script>
 
 </body>
 

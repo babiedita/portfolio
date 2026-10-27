@@ -87,6 +87,57 @@ const muralInfoClose =
   );
 
 
+const muralTicketForm =
+  document.getElementById(
+    'muralTicketForm'
+  );
+
+const muralTicketEmail =
+  document.getElementById(
+    'muralTicketEmail'
+  );
+
+const muralTicketNick =
+  document.getElementById(
+    'muralTicketNick'
+  );
+
+const muralTicketCorrectPanel =
+  document.getElementById(
+    'muralTicketCorrectPanel'
+  );
+
+const muralTicketCorrect =
+  document.getElementById(
+    'muralTicketCorrect'
+  );
+
+const muralTicketProblemPanel =
+  document.getElementById(
+    'muralTicketProblemPanel'
+  );
+
+const muralTicketProblem =
+  document.getElementById(
+    'muralTicketProblem'
+  );
+
+const muralTicketSubmit =
+  document.getElementById(
+    'muralTicketSubmit'
+  );
+
+const muralTicketFeedback =
+  document.getElementById(
+    'muralTicketFeedback'
+  );
+
+const muralTicketHoney =
+  document.getElementById(
+    'muralTicketHoney'
+  );
+
+
 /* =========================================
    IMAGENS DOS BOTÕES
 ========================================= */
@@ -1058,6 +1109,298 @@ muralHomeButton?.addEventListener(
 );
 
 
+
+/* =========================================
+   TICKET DO MURAL
+========================================= */
+
+const MURAL_TICKET_ENDPOINT =
+  'https://formsubmit.co/ajax/babieditacontato@gmail.com';
+
+
+function syncTicketNick() {
+  if (!muralTicketNick) {
+    return;
+  }
+
+  muralTicketNick.value =
+    localStorage.getItem(
+      MURAL_NICK_KEY
+    ) || '';
+}
+
+
+function getSelectedTicketType() {
+  return (
+    muralTicketForm
+      ?.querySelector(
+        'input[name="ticketType"]:checked'
+      )
+      ?.value || ''
+  );
+}
+
+
+function updateTicketFields() {
+  const type =
+    getSelectedTicketType();
+
+  const isCorrection =
+    type ===
+    'escrevi_errado';
+
+  const isOther =
+    type ===
+    'outro_problema';
+
+
+  if (
+    muralTicketCorrectPanel
+  ) {
+    muralTicketCorrectPanel.hidden =
+      !isCorrection;
+  }
+
+
+  if (
+    muralTicketProblemPanel
+  ) {
+    muralTicketProblemPanel.hidden =
+      !isOther;
+  }
+
+
+  if (muralTicketCorrect) {
+    muralTicketCorrect.required =
+      isCorrection;
+  }
+
+
+  if (muralTicketProblem) {
+    muralTicketProblem.required =
+      isOther;
+  }
+}
+
+
+muralTicketForm
+  ?.querySelectorAll(
+    'input[name="ticketType"]'
+  )
+  .forEach(
+    input => {
+      input.addEventListener(
+        'change',
+        updateTicketFields
+      );
+    }
+  );
+
+
+muralTicketForm?.addEventListener(
+  'submit',
+  async event => {
+
+    event.preventDefault();
+
+
+    if (
+      !muralTicketForm ||
+      !muralTicketEmail ||
+      !muralTicketSubmit
+    ) {
+      return;
+    }
+
+
+    const type =
+      getSelectedTicketType();
+
+
+    if (!type) {
+      return;
+    }
+
+
+    const email =
+      muralTicketEmail.value
+        .trim();
+
+
+    const currentNick =
+      muralTicketNick?.value
+        ?.trim() || 'não encontrado';
+
+
+    const correctVersion =
+      muralTicketCorrect?.value
+        ?.trim() || '';
+
+
+    const problemDescription =
+      muralTicketProblem?.value
+        ?.trim() || '';
+
+
+    muralTicketSubmit.disabled =
+      true;
+
+
+    if (muralTicketFeedback) {
+      muralTicketFeedback.textContent =
+        'enviando...';
+    }
+
+
+    const payload =
+      new URLSearchParams();
+
+
+    payload.set(
+      'email',
+      email
+    );
+
+
+    payload.set(
+      '_replyto',
+      email
+    );
+
+
+    payload.set(
+      '_subject',
+      type ===
+        'escrevi_errado'
+        ? 'Ticket do mural — correção de nick'
+        : 'Ticket do mural — outro problema'
+    );
+
+
+    payload.set(
+      '_template',
+      'table'
+    );
+
+
+    payload.set(
+      '_captcha',
+      'false'
+    );
+
+
+    payload.set(
+      '_honey',
+      muralTicketHoney?.value || ''
+    );
+
+
+    payload.set(
+      'tipo',
+      type ===
+        'escrevi_errado'
+        ? 'escrevi errado'
+        : 'outro problema'
+    );
+
+
+    payload.set(
+      'nick_atual',
+      currentNick
+    );
+
+
+    if (
+      type ===
+      'escrevi_errado'
+    ) {
+      payload.set(
+        'versao_correta',
+        correctVersion
+      );
+    }
+
+
+    if (
+      type ===
+      'outro_problema'
+    ) {
+      payload.set(
+        'descricao_problema',
+        problemDescription
+      );
+    }
+
+
+    payload.set(
+      'pagina',
+      window.location.href
+    );
+
+
+    try {
+      const response =
+        await fetch(
+          MURAL_TICKET_ENDPOINT,
+          {
+            method: 'POST',
+
+            headers: {
+              'Content-Type':
+                'application/x-www-form-urlencoded;charset=UTF-8',
+
+              'Accept':
+                'application/json'
+            },
+
+            body:
+              payload.toString()
+          }
+        );
+
+
+      if (!response.ok) {
+        throw new Error(
+          'ticket request failed'
+        );
+      }
+
+
+      if (muralTicketFeedback) {
+        muralTicketFeedback.textContent =
+          'ticket enviado :)';
+      }
+
+
+      muralTicketForm.reset();
+
+      syncTicketNick();
+
+      updateTicketFields();
+    }
+
+    catch (error) {
+      console.error(
+        'Erro ao enviar ticket:',
+        error
+      );
+
+
+      if (muralTicketFeedback) {
+        muralTicketFeedback.textContent =
+          'não consegui enviar agora :(';
+      }
+    }
+
+    finally {
+      muralTicketSubmit.disabled =
+        false;
+    }
+
+  }
+);
+
+
 /* =========================================
    MECÂNICA BOTÃO INFO
 ========================================= */
@@ -1093,6 +1436,18 @@ function openMuralInfo() {
   ) {
     return;
   }
+
+
+  syncTicketNick();
+
+
+  if (muralTicketFeedback) {
+    muralTicketFeedback.textContent =
+      '';
+  }
+
+
+  updateTicketFields();
 
 
   muralInfoBackdrop.classList.add(

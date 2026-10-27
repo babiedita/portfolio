@@ -549,7 +549,7 @@
 
 
 /* =========================================
-   CAIXA DE INFO
+   CAIXA DE INFO + TICKET
 ========================================= */
 
 .mural-info-backdrop {
@@ -564,7 +564,7 @@
   align-items: center;
   justify-content: center;
 
-  padding: 24px;
+  padding: 20px;
 
   background:
     rgba(255,255,255,.56);
@@ -597,27 +597,36 @@
 
   width:
     min(
-      430px,
-      92vw
+      610px,
+      94vw
     );
 
+  max-height:
+    min(
+      760px,
+      92vh
+    );
+
+  overflow: auto;
+
   padding:
-    34px
-    32px
-    30px;
+    58px
+    62px
+    54px;
 
-  border:
-    1px solid
-    rgba(43,43,43,.12);
-
-  border-radius: 22px;
+  border: 0;
+  border-radius: 0;
 
   background:
-    rgba(255,255,255,.96);
+    #ffffff
+    url("info-box.png")
+    center
+    / 100% 100%
+    no-repeat;
 
   box-shadow:
-    0 20px 55px
-    rgba(0,0,0,.12);
+    0 24px 65px
+    rgba(0,0,0,.14);
 
   color:
     #2b2b2b;
@@ -628,6 +637,13 @@
 
   transition:
     transform .22s ease;
+
+  scrollbar-width: none;
+}
+
+
+.mural-info-box::-webkit-scrollbar {
+  display: none;
 }
 
 
@@ -639,11 +655,17 @@
 }
 
 
+.mural-info-content {
+  position: relative;
+  z-index: 2;
+}
+
+
 .mural-info-box h2 {
   margin:
-    0 0 15px;
+    0 0 14px;
 
-  font-size: 30px;
+  font-size: 34px;
 
   font-weight: 400;
 }
@@ -651,27 +673,29 @@
 
 .mural-info-box p {
   margin:
-    0 0 11px;
+    0 0 10px;
 
   color:
-    rgba(43,43,43,.68);
+    rgba(43,43,43,.70);
 
   font-size: 15px;
 
   font-weight: 300;
 
-  line-height: 1.45;
+  line-height: 1.42;
 }
 
 
 .mural-info-close {
   position: absolute;
 
-  top: 10px;
-  right: 11px;
+  z-index: 4;
 
-  width: 25px;
-  height: 25px;
+  top: 31px;
+  right: 35px;
+
+  width: 26px;
+  height: 26px;
 
   display: flex;
 
@@ -682,21 +706,401 @@
 
   border:
     1px solid
-    rgba(43,43,43,.10);
+    rgba(43,43,43,.13);
 
   border-radius: 50%;
 
   background:
-    #f5f5f5;
+    rgba(255,255,255,.90);
 
   color:
-    rgba(43,43,43,.58);
+    rgba(43,43,43,.62);
 
   font-family:
     Arial,
     sans-serif;
 
   font-size: 18px;
+}
+
+
+.mural-ticket-divider {
+  width: 100%;
+  height: 1px;
+
+  margin:
+    22px 0
+    19px;
+
+  background:
+    rgba(43,43,43,.10);
+}
+
+
+.mural-info-box
+.mural-ticket-intro {
+  margin-bottom: 18px;
+
+  color:
+    rgba(43,43,43,.78);
+
+  font-size: 15px;
+}
+
+
+.mural-ticket-intro strong {
+  color:
+    #2b2b2b;
+
+  font-weight: 400;
+}
+
+
+.mural-ticket-form {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+
+.mural-ticket-label,
+.mural-ticket-options legend {
+  color:
+    rgba(43,43,43,.66);
+
+  font-family:
+    "coolvetica",
+    "Coolvetica",
+    Arial,
+    sans-serif;
+
+  font-size: 12px;
+
+  font-weight: 300;
+
+  letter-spacing: .2px;
+}
+
+
+.mural-ticket-input {
+  width: 100%;
+
+  min-height: 44px;
+
+  padding:
+    10px 13px;
+
+  border:
+    1px solid
+    rgba(43,43,43,.15);
+
+  border-radius: 12px;
+
+  outline: 0;
+
+  background:
+    rgba(255,255,255,.84);
+
+  color:
+    #2b2b2b;
+
+  font-family:
+    "coolvetica",
+    "Coolvetica",
+    Arial,
+    sans-serif;
+
+  font-size: 15px;
+
+  font-weight: 300;
+
+  transition:
+    border-color .15s ease,
+    box-shadow .15s ease;
+}
+
+
+.mural-ticket-input:focus {
+  border-color:
+    #6bbc0e;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(107,188,14,.10);
+}
+
+
+.mural-ticket-input::placeholder {
+  color:
+    rgba(43,43,43,.34);
+}
+
+
+.mural-ticket-options {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin:
+    4px 0 0;
+
+  padding: 0;
+
+  border: 0;
+}
+
+
+.mural-ticket-options legend {
+  width: 100%;
+
+  margin-bottom: 2px;
+}
+
+
+.mural-ticket-option {
+  position: relative;
+
+  display: inline-flex;
+
+  cursor:
+    url("cursor-hand.png")
+    0 0,
+    pointer;
+}
+
+
+.mural-ticket-option input {
+  position: absolute;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+
+.mural-ticket-option span {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 36px;
+
+  padding:
+    0 13px;
+
+  border:
+    1px solid
+    rgba(43,43,43,.14);
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,.76);
+
+  color:
+    rgba(43,43,43,.67);
+
+  font-family:
+    "coolvetica",
+    "Coolvetica",
+    Arial,
+    sans-serif;
+
+  font-size: 13px;
+
+  font-weight: 300;
+
+  transition:
+    background .15s ease,
+    color .15s ease,
+    border-color .15s ease;
+}
+
+
+.mural-ticket-option
+input:checked + span {
+  border-color:
+    #6bbc0e;
+
+  background:
+    #6bbc0e;
+
+  color:
+    #ffffff;
+}
+
+
+.mural-ticket-panel {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+
+  margin-top: 2px;
+}
+
+
+.mural-ticket-panel[hidden] {
+  display: none;
+}
+
+
+.mural-ticket-textarea {
+  min-height: 88px;
+
+  resize: vertical;
+}
+
+
+.mural-ticket-honey {
+  position: absolute !important;
+
+  width: 1px !important;
+  height: 1px !important;
+
+  opacity: 0 !important;
+
+  pointer-events: none !important;
+
+  left: -9999px !important;
+}
+
+
+.mural-ticket-submit {
+  min-height: 43px;
+
+  margin-top: 4px;
+
+  padding:
+    0 17px;
+
+  border: 0;
+
+  border-radius: 13px;
+
+  background:
+    #6bbc0e;
+
+  color:
+    #ffffff;
+
+  font-family:
+    "coolvetica",
+    "Coolvetica",
+    Arial,
+    sans-serif;
+
+  font-size: 15px;
+
+  font-weight: 300;
+
+  transition:
+    transform .12s ease,
+    opacity .15s ease;
+}
+
+
+.mural-ticket-submit:hover {
+  transform:
+    translateY(-1px);
+}
+
+
+.mural-ticket-submit:active {
+  transform:
+    scale(.97);
+}
+
+
+.mural-ticket-submit:disabled {
+  opacity: .5;
+
+  cursor: default;
+}
+
+
+.mural-ticket-feedback {
+  min-height: 18px;
+
+  margin: 0 !important;
+
+  color:
+    #6bbc0e !important;
+
+  font-size: 12px !important;
+
+  text-align: center;
+}
+
+
+/* =========================================
+   MOBILE — INFO + TICKET
+========================================= */
+
+@media (max-width: 700px) {
+
+  .mural-info-backdrop {
+    align-items: flex-start;
+
+    padding:
+      78px
+      10px
+      16px;
+  }
+
+
+  .mural-info-box {
+    width:
+      min(
+        540px,
+        96vw
+      );
+
+    max-height:
+      calc(
+        100vh - 92px
+      );
+
+    padding:
+      46px
+      34px
+      40px;
+  }
+
+
+  .mural-info-close {
+    top: 25px;
+    right: 25px;
+  }
+
+
+  .mural-info-box h2 {
+    font-size: 29px;
+  }
+
+
+  .mural-info-box p,
+  .mural-info-box
+  .mural-ticket-intro {
+    font-size: 14px;
+  }
+
+
+  .mural-ticket-option span {
+    min-height: 34px;
+
+    padding:
+      0 11px;
+
+    font-size: 12px;
+  }
+
 }
 
 
