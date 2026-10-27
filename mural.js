@@ -247,42 +247,30 @@ function createNickElement(record) {
     );
 
 
+  element.dataset.nickSeed =
+    String(seed);
+
+
   const rotation =
     (
-      (seed % 9) -
-      4
-    ) * 0.8;
-
-
-  const offsetY =
-    (
-      (
-        Math.floor(seed / 11)
-      ) %
-      19
-    ) -
-    9;
+      (seed % 11) -
+      5
+    ) * 0.7;
 
 
   const fontSize =
-    18 +
+    17 +
     (
       (
-        Math.floor(seed / 29)
+        Math.floor(seed / 31)
       ) %
-      9
+      8
     );
 
 
   element.style.setProperty(
     '--nick-rotate',
     `${rotation}deg`
-  );
-
-
-  element.style.setProperty(
-    '--nick-y',
-    `${offsetY}px`
   );
 
 
@@ -294,6 +282,329 @@ function createNickElement(record) {
 
   return element;
 }
+
+
+/* =========================================
+   POSICIONAR NICKS LIVREMENTE
+========================================= */
+
+function seededRandom(seed) {
+  let state =
+    seed || 1;
+
+
+  return () => {
+    state =
+      (
+        state *
+        1664525 +
+        1013904223
+      ) >>> 0;
+
+
+    return (
+      state /
+      4294967296
+    );
+  };
+}
+
+
+function rectanglesOverlap(
+  a,
+  b,
+  padding = 26
+) {
+  return !(
+    a.right + padding < b.left ||
+    a.left > b.right + padding ||
+    a.bottom + padding < b.top ||
+    a.top > b.bottom + padding
+  );
+}
+
+
+function layoutNickWall() {
+  if (!nickWall) return;
+
+
+  const elements =
+    Array.from(
+      nickWall.querySelectorAll(
+        '.mural-nick'
+      )
+    );
+
+
+  if (!elements.length) {
+    return;
+  }
+
+
+  const wallWidth =
+    nickWall.clientWidth;
+
+
+  const baseHeight =
+    Math.max(
+      430,
+      window.innerHeight -
+        345
+    );
+
+
+  const densityRows =
+    Math.max(
+      1,
+      Math.ceil(
+        elements.length /
+        10
+      )
+    );
+
+
+  const desiredHeight =
+    Math.max(
+      baseHeight,
+      390 +
+        densityRows *
+        120
+    );
+
+
+  nickWall.style.minHeight =
+    `${desiredHeight}px`;
+
+
+  const wallHeight =
+    nickWall.clientHeight;
+
+
+  const paddingX =
+    window.innerWidth <= 700
+      ? 10
+      : 20;
+
+
+  const paddingY =
+    window.innerWidth <= 700
+      ? 18
+      : 24;
+
+
+  const placed = [];
+
+
+  elements.forEach(
+    (element, index) => {
+      const seed =
+        Number(
+          element.dataset.nickSeed
+        ) ||
+        index + 1;
+
+
+      const random =
+        seededRandom(
+          seed +
+          elements.length *
+          97
+        );
+
+
+      const width =
+        Math.ceil(
+          element.offsetWidth
+        );
+
+
+      const height =
+        Math.ceil(
+          element.offsetHeight
+        );
+
+
+      const maxX =
+        Math.max(
+          paddingX,
+          wallWidth -
+            width -
+            paddingX
+        );
+
+
+      const maxY =
+        Math.max(
+          paddingY,
+          wallHeight -
+            height -
+            paddingY
+        );
+
+
+      let chosen = null;
+      let best = null;
+      let bestDistance = -1;
+
+
+      for (
+        let attempt = 0;
+        attempt < 140;
+        attempt += 1
+      ) {
+        const x =
+          paddingX +
+          random() *
+          Math.max(
+            0,
+            maxX -
+              paddingX
+          );
+
+
+        const y =
+          paddingY +
+          random() *
+          Math.max(
+            0,
+            maxY -
+              paddingY
+          );
+
+
+        const candidate = {
+          left: x,
+          top: y,
+          right: x + width,
+          bottom: y + height
+        };
+
+
+        const collides =
+          placed.some(
+            box =>
+              rectanglesOverlap(
+                candidate,
+                box,
+                window.innerWidth <= 700
+                  ? 16
+                  : 24
+              )
+          );
+
+
+        if (!collides) {
+          chosen = candidate;
+          break;
+        }
+
+
+        let minDistance =
+          Infinity;
+
+
+        placed.forEach(
+          box => {
+            const centerX =
+              candidate.left +
+              width / 2;
+
+
+            const centerY =
+              candidate.top +
+              height / 2;
+
+
+            const otherCenterX =
+              (
+                box.left +
+                box.right
+              ) / 2;
+
+
+            const otherCenterY =
+              (
+                box.top +
+                box.bottom
+              ) / 2;
+
+
+            const distance =
+              Math.hypot(
+                centerX -
+                  otherCenterX,
+                centerY -
+                  otherCenterY
+              );
+
+
+            minDistance =
+              Math.min(
+                minDistance,
+                distance
+              );
+          }
+        );
+
+
+        if (
+          minDistance >
+          bestDistance
+        ) {
+          bestDistance =
+            minDistance;
+
+          best = candidate;
+        }
+      }
+
+
+      const position =
+        chosen ||
+        best || {
+          left: paddingX,
+          top: paddingY,
+          right:
+            paddingX +
+            width,
+          bottom:
+            paddingY +
+            height
+        };
+
+
+      placed.push(position);
+
+
+      element.style.left =
+        `${position.left}px`;
+
+
+      element.style.top =
+        `${position.top}px`;
+    }
+  );
+}
+
+
+let nickLayoutTimer = null;
+
+
+window.addEventListener(
+  'resize',
+  () => {
+    window.clearTimeout(
+      nickLayoutTimer
+    );
+
+
+    nickLayoutTimer =
+      window.setTimeout(
+        layoutNickWall,
+        120
+      );
+  }
+);
 
 
 /* =========================================
@@ -373,6 +684,11 @@ async function loadMuralNicks() {
         createNickElement(record)
       );
     }
+  );
+
+
+  window.requestAnimationFrame(
+    layoutNickWall
   );
 }
 
@@ -597,6 +913,11 @@ muralForm?.addEventListener(
 
       nickWall.appendChild(
         newNick
+      );
+
+
+      window.requestAnimationFrame(
+        layoutNickWall
       );
     }
 
