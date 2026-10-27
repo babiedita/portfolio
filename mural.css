@@ -1332,3 +1332,30 @@ body.is-loading
 .nick-wall .mural-nick.is-new {
   color: #2b2b2b !important;
 }
+
+
+/* =========================================
+   ESPAÇAMENTO DE LETRAS — AJUSTE VISUAL
+========================================= */
+
+/* nicks espalhados no mural */
+.nick-wall .mural-nick {
+  letter-spacing: .8px !important;
+}
+
+/* mensagem verde embaixo do campo */
+.mural-feedback {
+  letter-spacing: .7px !important;
+}
+
+/* textos brancos da caixa de info/ticket */
+.mural-info-box p,
+.mural-info-box .mural-ticket-intro,
+.mural-ticket-label,
+.mural-ticket-options legend,
+.mural-ticket-option span,
+.mural-ticket-input,
+.mural-ticket-submit,
+.mural-ticket-feedback {
+  letter-spacing: .7px;
+}
