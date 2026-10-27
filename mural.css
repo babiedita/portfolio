@@ -1359,3 +1359,87 @@ body.is-loading
 .mural-ticket-feedback {
   letter-spacing: .7px;
 }
+
+
+/* =========================================
+   FORMULÁRIO — PADRONIZAÇÃO VISUAL
+========================================= */
+
+/* distância consistente entre label e campo */
+.mural-ticket-label,
+.mural-ticket-options legend {
+  display: block;
+  margin: 0 0 7px;
+  color: rgba(255,255,255,.94) !important;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: .7px;
+  line-height: 1.2;
+}
+
+/* cada bloco fica com o mesmo ritmo vertical */
+.mural-ticket-form {
+  gap: 14px;
+}
+
+.mural-ticket-panel {
+  gap: 0;
+  margin-top: 0;
+}
+
+/* inputs e textarea com mesma tipografia/cor */
+.mural-ticket-input {
+  color: #6f6f6f !important;
+  background: rgba(255,255,255,.92);
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: .45px;
+  line-height: 1.2;
+}
+
+.mural-ticket-input::placeholder {
+  color: #a5a5a5 !important;
+  opacity: 1;
+}
+
+/* opções com mesma cor de texto dos campos */
+.mural-ticket-option span {
+  color: #6f6f6f !important;
+  background: rgba(255,255,255,.92);
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: .45px;
+}
+
+/* selecionado continua verde/branco */
+.mural-ticket-option input:checked + span {
+  color: #ffffff !important;
+  background: #6bbc0e;
+}
+
+/* aproxima as opções do legend de forma uniforme */
+.mural-ticket-options {
+  gap: 8px;
+  margin-top: 0;
+}
+
+/* mobile */
+@media (max-width: 700px) {
+  .mural-ticket-label,
+  .mural-ticket-options legend {
+    margin-bottom: 6px;
+    font-size: 12.5px;
+  }
+
+  .mural-ticket-form {
+    gap: 12px;
+  }
+
+  .mural-ticket-input {
+    font-size: 15px;
+  }
+
+  .mural-ticket-option span {
+    font-size: 13px;
+  }
+}
