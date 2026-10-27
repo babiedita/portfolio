@@ -1318,3 +1318,17 @@ body.is-loading
     font-size: 15px;
   }
 }
+
+
+/* =========================================
+   COR DOS NICKS NO MURAL
+========================================= */
+
+.nick-wall .mural-nick {
+  color: #2b2b2b !important;
+  text-shadow: none !important;
+}
+
+.nick-wall .mural-nick.is-new {
+  color: #2b2b2b !important;
+}
