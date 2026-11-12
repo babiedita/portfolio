@@ -63,8 +63,9 @@
       position: absolute;
       z-index: 12;
       top: 50%;
-      display: grid;
-      place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 52px;
       height: 52px;
       padding: 0;
@@ -85,20 +86,19 @@
 
 
     .reel-carousel-arrow-icon {
-      display: block;
-      width: 1em;
-      height: 1em;
-      line-height: .82em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      line-height: 1;
+      transform: none;
       text-align: center;
-      transform: translateY(-1px);
     }
 
-    .reel-carousel-prev .reel-carousel-arrow-icon {
-      transform: translate(1px, -1px);
-    }
-
+    .reel-carousel-prev .reel-carousel-arrow-icon,
     .reel-carousel-next .reel-carousel-arrow-icon {
-      transform: translate(-1px, -1px);
+      transform: none;
     }
 
     .reel-carousel-arrow:hover {
@@ -111,11 +111,11 @@
     }
 
     .reel-carousel-prev {
-      left: -106px;
+      left: -148px;
     }
 
     .reel-carousel-next {
-      right: -106px;
+      right: -148px;
     }
 
     .reel-carousel-sound {
@@ -164,11 +164,11 @@
 
     @media (max-width: 1180px) {
       .reel-carousel-prev {
-        left: -44px;
+        left: -64px;
       }
 
       .reel-carousel-next {
-        right: -44px;
+        right: -64px;
       }
     }
 
@@ -201,11 +201,11 @@
       }
 
       .reel-carousel-prev {
-        left: -40px;
+        left: -52px;
       }
 
       .reel-carousel-next {
-        right: -40px;
+        right: -52px;
       }
 
       .reel-carousel-sound {
