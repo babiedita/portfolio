@@ -1,1 +1,53 @@
+name: Keep Supabase Awake
 
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping mural database
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          URL="https://abmpcxryhuhzmhtuztwn.supabase.co/rest/v1/mural_nicks?select=id&limit=1"
+          API_KEY="sb_publishable_Y9IpZKOBWY2j0SNWlBFZ8A_0A2kUghI"
+
+          echo "Pinging Supabase..."
+          echo "Endpoint: $URL"
+
+          HTTP_CODE="$(
+            curl \
+              --silent \
+              --show-error \
+              --location \
+              --retry 5 \
+              --retry-delay 10 \
+              --retry-max-time 90 \
+              --retry-all-errors \
+              --connect-timeout 20 \
+              --max-time 45 \
+              --output /tmp/supabase-response.json \
+              --write-out "%{http_code}" \
+              -H "apikey: $API_KEY" \
+              -H "Authorization: Bearer $API_KEY" \
+              -H "Accept: application/json" \
+              "$URL"
+          )"
+
+          echo "HTTP status: $HTTP_CODE"
+          echo "Response:"
+          cat /tmp/supabase-response.json || true
+          echo
+
+          if [[ "$HTTP_CODE" -lt 200 || "$HTTP_CODE" -ge 300 ]]; then
+            echo "::error::Supabase ping failed with HTTP status $HTTP_CODE"
+            exit 1
+          fi
+
+          echo "Supabase ping completed successfully."
