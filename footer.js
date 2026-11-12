@@ -603,3 +603,37 @@
 
   requestUpdate();
 })();
+
+
+/* =========================================
+   MUSIC ICON STATE — sem emoji
+========================================= */
+(() => {
+  const audio = document.getElementById('backgroundAudio');
+  const mainPlay = document.getElementById('musicPlay');
+  const miniPlay = document.getElementById('musicMiniPlay');
+
+  if (!audio) return;
+
+  function syncMusicIconState() {
+    const playing = !audio.paused && !audio.ended;
+
+    mainPlay?.classList.toggle('is-playing', playing);
+    miniPlay?.classList.toggle('is-playing', playing);
+  }
+
+  audio.addEventListener('play', syncMusicIconState);
+  audio.addEventListener('pause', syncMusicIconState);
+  audio.addEventListener('ended', syncMusicIconState);
+  audio.addEventListener('loadeddata', syncMusicIconState);
+
+  mainPlay?.addEventListener('click', () => {
+    requestAnimationFrame(syncMusicIconState);
+  });
+
+  miniPlay?.addEventListener('click', () => {
+    requestAnimationFrame(syncMusicIconState);
+  });
+
+  syncMusicIconState();
+})();
