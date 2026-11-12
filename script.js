@@ -113,12 +113,11 @@ const reelVideo = {
 const videos = [
   { id:1, order:1, type:'short', title:'A MELHOR IA...', subtitle:'dev.pedroca', youtube:'https://youtu.be/_DPBiqax3RI?si=UziqVa82r_FY4odw' },
   { id:2, order:3, type:'short', title:'POV: você é o que come...', subtitle:'lyukio', youtube:'https://youtu.be/M8ZeJpR1RlQ?si=3zVcxLhAZHB9MpVW' },
-  { id:3, order:4, type:'short', title:'POV: você é o que come...', subtitle:'lyukio', youtube:'https://youtube.com/shorts/5q83MxRqII4' },
-  { id:4, order:5, type:'short', title:'POV: você é frio e calculista', subtitle:'lyukio', youtube:'https://youtube.com/shorts/lcL415I02jU' },
-  { id:5, order:6, type:'short', title:'POV: pickaram seu chamber', subtitle:'lyukio', youtube:'https://youtu.be/65uLMUQbT0A?si=3N_SEpWopdf3IY52' },
-  { id:6, order:9, type:'short', title:'Fingi estar afk e ganhei o round', subtitle:'levikingbr', youtube:'https://youtu.be/87HsdZ6cYPU?si=9ZbS6ZGdh76m8Pp8' },
-  { id:7, order:7, type:'short', title:'Pov: você tem refluxo com sons de arroto', subtitle:'levikingbr', youtube:'https://youtu.be/Iu6F89vnrkU?si=ZelhorLrSoMU1h3t' },
-  { id:8, order:8, type:'short', title:'Pov: você jogou seu primeiro jogo de terror', subtitle:'levikingbr', youtube:'https://youtube.com/shorts/PEXLdziGxFk' },
+  { id:4, order:4, type:'short', title:'POV: você é frio e calculista', subtitle:'lyukio', youtube:'https://youtube.com/shorts/lcL415I02jU' },
+  { id:5, order:5, type:'short', title:'POV: pickaram seu chamber', subtitle:'lyukio', youtube:'https://youtu.be/65uLMUQbT0A?si=3N_SEpWopdf3IY52' },
+  { id:6, order:8, type:'short', title:'Fingi estar afk e ganhei o round', subtitle:'levikingbr', youtube:'https://youtu.be/87HsdZ6cYPU?si=9ZbS6ZGdh76m8Pp8' },
+  { id:7, order:6, type:'short', title:'Pov: você tem refluxo com sons de arroto', subtitle:'levikingbr', youtube:'https://youtu.be/Iu6F89vnrkU?si=ZelhorLrSoMU1h3t' },
+  { id:8, order:7, type:'short', title:'Pov: você jogou seu primeiro jogo de terror', subtitle:'levikingbr', youtube:'https://youtube.com/shorts/PEXLdziGxFk' },
   { id:9, order:2, type:'short', title:'Rifa do Pedroca e Camomilla', subtitle:'dev.pedroca', youtube:'https://www.youtube.com/shorts/D3oh7QUdeeE' },
 
   { id:6, order:2, type:'long', title:'FORTNITE - EM BUSCA DO TOKEN PROIBIDO', subtitle:'advegames', youtube:'https://www.youtube.com/watch?v=cvRHFVUIf08&t=84s' },
