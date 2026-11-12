@@ -19,6 +19,180 @@
   <link rel="preload" as="image" href="curtir-1.png">
   <link rel="preload" as="image" href="curtir-2.png">
   <link rel="preload" as="image" href="curtir-3.png">
+
+  <style id="long-video-carousel-styles">
+    .reel-carousel-wrap {
+      position: relative;
+    }
+
+    .reel-carousel-frame {
+      position: relative;
+      overflow: hidden;
+      background: #111;
+      aspect-ratio: 16 / 9;
+      min-height: 0;
+    }
+
+    .reel-carousel-player {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #111;
+    }
+
+    .reel-carousel-arrow {
+      position: absolute;
+      z-index: 6;
+      top: 50%;
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 64px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,.88);
+      color: #111;
+      box-shadow: 0 5px 18px rgba(0,0,0,.16);
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 42px;
+      line-height: 1;
+      transform: translateY(-50%);
+      transition: transform .16s ease, background .16s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .reel-carousel-arrow:hover {
+      background: #fff;
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .reel-carousel-arrow:active {
+      transform: translateY(-50%) scale(.94);
+    }
+
+    .reel-carousel-prev {
+      left: 18px;
+    }
+
+    .reel-carousel-next {
+      right: 18px;
+    }
+
+    .reel-carousel-sound {
+      position: absolute;
+      z-index: 7;
+      top: 50%;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,.94);
+      color: #111;
+      box-shadow: 0 7px 24px rgba(0,0,0,.2);
+      cursor: pointer;
+      font-family: "coolvetica", "Coolvetica", Arial, sans-serif;
+      font-size: 16px;
+      letter-spacing: .35px;
+      transform: translate(-50%, -50%);
+      transition: transform .16s ease, opacity .18s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .reel-carousel-sound:hover {
+      transform: translate(-50%, -50%) scale(1.04);
+    }
+
+    .reel-carousel-sound:active {
+      transform: translate(-50%, -50%) scale(.95);
+    }
+
+    .reel-carousel-sound.is-hidden {
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(.92);
+    }
+
+    .reel-carousel-sound-icon {
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .reel-carousel-meta {
+      position: absolute;
+      z-index: 5;
+      right: 18px;
+      bottom: 16px;
+      left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-width: calc(100% - 36px);
+      pointer-events: none;
+      color: #fff;
+      text-align: left;
+      text-shadow: 0 2px 12px rgba(0,0,0,.75);
+    }
+
+    .reel-carousel-meta strong {
+      overflow: hidden;
+      font-family: "coolvetica", "Coolvetica", Arial, sans-serif;
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: .25px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .reel-carousel-meta span {
+      overflow: hidden;
+      font-size: 12px;
+      opacity: .8;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 700px) {
+      .reel-carousel-arrow {
+        width: 42px;
+        height: 54px;
+        font-size: 35px;
+      }
+
+      .reel-carousel-prev {
+        left: 10px;
+      }
+
+      .reel-carousel-next {
+        right: 10px;
+      }
+
+      .reel-carousel-sound {
+        min-height: 44px;
+        padding: 0 15px;
+        font-size: 14px;
+      }
+
+      .reel-carousel-meta {
+        right: 12px;
+        bottom: 10px;
+        left: 12px;
+      }
+
+      .reel-carousel-meta strong {
+        font-size: 14px;
+      }
+    }
+  </style>
+
 </head>
 <body>
   <div class="site-loader" id="siteLoader">
@@ -78,14 +252,46 @@
         <img class="intro-title-image" src="titulo.png" alt="Babi Edita" id="intro-title">
         <p>Oi, bem vindo ao meu portfolio!<br class="desktop-break"> Eu sou a Babi, fique a vontade para conhecer meu trabalho :P</p>
 
-        <div class="reel-wrap">
-          <span class="reel-sticker">dá o play <span aria-hidden="true">↓</span></span>
-          <div class="reel-frame" id="reelFrame">
-            <div class="reel-youtube" id="reelYoutube" aria-label="Reel demonstrativo"></div>
-            <div class="reel-topline"><span>REC <i></i></span></div>
-            <img class="reel-alien" src="alien.png" alt="" aria-hidden="true">
+        <div class="reel-wrap reel-carousel-wrap" id="longVideoCarousel">
+          <div class="reel-frame reel-carousel-frame">
+            <iframe
+              class="reel-carousel-player"
+              id="longVideoPlayer"
+              title="Vídeo em destaque"
+              src=""
+              allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+              allowfullscreen
+            ></iframe>
+
+            <button
+              class="reel-carousel-arrow reel-carousel-prev"
+              id="longVideoPrev"
+              type="button"
+              aria-label="Vídeo anterior"
+            >‹</button>
+
+            <button
+              class="reel-carousel-arrow reel-carousel-next"
+              id="longVideoNext"
+              type="button"
+              aria-label="Próximo vídeo"
+            >›</button>
+
+            <button
+              class="reel-carousel-sound"
+              id="longVideoSound"
+              type="button"
+              aria-label="Ativar som do vídeo"
+            >
+              <span class="reel-carousel-sound-icon" aria-hidden="true">🔇</span>
+              <span>ativar som</span>
+            </button>
+
+            <div class="reel-carousel-meta" aria-live="polite">
+              <strong id="longVideoTitle"></strong>
+              <span id="longVideoSubtitle"></span>
+            </div>
           </div>
-          <div class="reel-caption"><span></span><span></span></div>
         </div>
       </section>
 
@@ -280,6 +486,184 @@
   </div>
 
   <script src="script.js?v=1400"></script>
+
+  <script id="long-video-carousel-script">
+    (() => {
+      const carousel = document.getElementById('longVideoCarousel');
+      const player = document.getElementById('longVideoPlayer');
+      const prev = document.getElementById('longVideoPrev');
+      const next = document.getElementById('longVideoNext');
+      const sound = document.getElementById('longVideoSound');
+      const title = document.getElementById('longVideoTitle');
+      const subtitle = document.getElementById('longVideoSubtitle');
+
+      if (!carousel || !player || !prev || !next || !sound) return;
+
+      const longVideos =
+        typeof videos !== 'undefined' && Array.isArray(videos)
+          ? videos.filter(video => video && video.type === 'long' && video.youtube)
+          : [];
+
+      if (!longVideos.length) {
+        carousel.style.display = 'none';
+        return;
+      }
+
+      let currentIndex = 0;
+      let soundEnabled = false;
+
+      function youtubeId(value) {
+        if (typeof getYoutubeId === 'function') {
+          return getYoutubeId(value);
+        }
+
+        if (!value) return null;
+
+        const clean = String(value).trim();
+        if (/^[a-zA-Z0-9_-]{11}$/.test(clean)) return clean;
+
+        try {
+          const url = new URL(clean);
+
+          if (url.hostname.includes('youtu.be')) {
+            return url.pathname.split('/').filter(Boolean)[0] || null;
+          }
+
+          const watchId = url.searchParams.get('v');
+          if (watchId) return watchId;
+
+          const parts = url.pathname.split('/').filter(Boolean);
+          for (const segment of ['shorts', 'embed', 'live']) {
+            const index = parts.indexOf(segment);
+            if (index !== -1 && parts[index + 1]) return parts[index + 1];
+          }
+        } catch (_) {}
+
+        return null;
+      }
+
+      function sendPlayerCommand(func, args = []) {
+        if (!player.contentWindow) return;
+
+        player.contentWindow.postMessage(
+          JSON.stringify({
+            event: 'command',
+            func,
+            args
+          }),
+          '*'
+        );
+      }
+
+      function pauseSiteMusic() {
+        const audio = document.getElementById('backgroundAudio');
+
+        if (audio && !audio.paused) {
+          audio.pause();
+
+          if (typeof updateMusicButton === 'function') {
+            updateMusicButton();
+          }
+        }
+
+        if (typeof unlockMusicOnFirstInteraction === 'function') {
+          document.removeEventListener('pointerdown', unlockMusicOnFirstInteraction);
+          document.removeEventListener('keydown', unlockMusicOnFirstInteraction);
+        }
+      }
+
+      function buildEmbed(video) {
+        const id = youtubeId(video.youtube);
+        if (!id) return '';
+
+        const params = new URLSearchParams({
+          autoplay: '1',
+          mute: soundEnabled ? '0' : '1',
+          controls: '1',
+          rel: '0',
+          playsinline: '1',
+          enablejsapi: '1',
+          iv_load_policy: '3'
+        });
+
+        return `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`;
+      }
+
+      function renderCurrent() {
+        const video = longVideos[currentIndex];
+        const embed = buildEmbed(video);
+
+        if (!embed) return;
+
+        player.src = embed;
+        player.title = video.title || 'Vídeo em destaque';
+
+        if (title) title.textContent = video.title || '';
+        if (subtitle) subtitle.textContent = video.subtitle || '';
+
+        sound.classList.toggle('is-hidden', soundEnabled);
+        sound.setAttribute('aria-hidden', String(soundEnabled));
+      }
+
+      function move(direction) {
+        currentIndex =
+          (currentIndex + direction + longVideos.length) %
+          longVideos.length;
+
+        renderCurrent();
+      }
+
+      prev.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        move(-1);
+      });
+
+      next.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        move(1);
+      });
+
+      sound.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        pauseSiteMusic();
+
+        soundEnabled = true;
+        sound.classList.add('is-hidden');
+        sound.setAttribute('aria-hidden', 'true');
+
+        sendPlayerCommand('unMute');
+        sendPlayerCommand('setVolume', [100]);
+        sendPlayerCommand('playVideo');
+      });
+
+      const siteAudio = document.getElementById('backgroundAudio');
+
+      siteAudio?.addEventListener('play', () => {
+        if (!soundEnabled) return;
+
+        soundEnabled = false;
+        sendPlayerCommand('mute');
+
+        sound.classList.remove('is-hidden');
+        sound.setAttribute('aria-hidden', 'false');
+      });
+
+      document.addEventListener('keydown', event => {
+        const tag = document.activeElement?.tagName?.toLowerCase();
+        if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+
+        if (event.key === 'ArrowLeft') move(-1);
+        if (event.key === 'ArrowRight') move(1);
+      });
+
+      renderCurrent();
+    })();
+  </script>
+
   <script src="thumbs.js?v=1"></script>
   <script src="footer.js?v=3"></script>
 </body>
