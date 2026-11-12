@@ -754,3 +754,75 @@ html.custom-scrollbar-active::-webkit-scrollbar {
     min-width: 30px !important;
   }
 }
+
+
+/* =========================================
+   MUSIC CONTROLS — FIX FINAL DE SOBREPOSIÇÃO
+========================================= */
+
+/* cada botão precisa ocupar espaço real;
+   sem isso, os pseudo-ícones ficam todos sobrepostos */
+.music-control,
+.music-mini-control {
+  flex: 0 0 auto !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* garante espaço suficiente pros três controles */
+.music-controls {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 88px !important;
+  min-width: 88px !important;
+}
+
+/* mantém os ícones perfeitamente centrados */
+.music-control::before,
+.music-control::after,
+.music-mini-control::before,
+.music-mini-control::after {
+  transform-origin: center center !important;
+}
+
+/* desktop */
+@media (min-width: 701px) {
+  .music-control {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+  }
+
+  .music-controls {
+    width: 88px !important;
+    min-width: 88px !important;
+    gap: 8px !important;
+  }
+}
+
+/* mobile */
+@media (max-width: 700px) {
+  .music-control,
+  .music-mini-control {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+  }
+
+  .music-controls {
+    width: auto !important;
+    min-width: 0 !important;
+    gap: 7px !important;
+    justify-content: flex-start !important;
+  }
+}
