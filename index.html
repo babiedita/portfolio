@@ -45,25 +45,23 @@
       overflow: hidden;
     }
 
-    .reel-carousel-curtain {
+    .reel-carousel-frame::after {
+      content: "";
       position: absolute;
       z-index: 4;
-      top: -8px;
-      right: -10px;
-      bottom: -8px;
-      left: -10px;
-      width: calc(100% + 20px);
-      height: calc(100% + 16px);
-      object-fit: fill;
-      object-position: center;
-      transform: none;
+      top: -18px;
+      right: -18px;
+      bottom: -18px;
+      left: -18px;
+      background: url("cortina.svg") center / 100% 100% no-repeat;
       pointer-events: none;
       user-select: none;
     }
 
+
     .reel-carousel-arrow {
       position: absolute;
-      z-index: 10;
+      z-index: 12;
       top: 50%;
       display: grid;
       place-items: center;
@@ -122,7 +120,7 @@
 
     .reel-carousel-sound {
       position: absolute;
-      z-index: 9;
+      z-index: 11;
       top: 50%;
       left: 50%;
       display: flex;
@@ -175,6 +173,14 @@
     }
 
     @media (max-width: 700px) {
+      .reel-carousel-frame::after {
+        top: -10px;
+        right: -10px;
+        bottom: -10px;
+        left: -10px;
+      }
+
+
       .reel-carousel-curtain {
         top: -4px;
         right: -5px;
@@ -279,13 +285,6 @@
               allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
               allowfullscreen
             ></iframe>
-
-            <img
-              class="reel-carousel-curtain"
-              src="cortina.svg"
-              alt=""
-              aria-hidden="true"
-            >
 
             <button
               class="reel-carousel-arrow reel-carousel-prev"
