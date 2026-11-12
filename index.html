@@ -44,9 +44,23 @@
       background: #111;
     }
 
+    .reel-carousel-curtain {
+      position: absolute;
+      z-index: 4;
+      top: -18px;
+      right: -18px;
+      bottom: -18px;
+      left: -18px;
+      width: calc(100% + 36px);
+      height: calc(100% + 36px);
+      object-fit: fill;
+      pointer-events: none;
+      user-select: none;
+    }
+
     .reel-carousel-arrow {
       position: absolute;
-      z-index: 8;
+      z-index: 10;
       top: 50%;
       display: grid;
       place-items: center;
@@ -68,6 +82,24 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+
+    .reel-carousel-arrow-icon {
+      display: block;
+      width: 1em;
+      height: 1em;
+      line-height: .82em;
+      text-align: center;
+      transform: translateY(-1px);
+    }
+
+    .reel-carousel-prev .reel-carousel-arrow-icon {
+      transform: translate(1px, -1px);
+    }
+
+    .reel-carousel-next .reel-carousel-arrow-icon {
+      transform: translate(-1px, -1px);
+    }
+
     .reel-carousel-arrow:hover {
       filter: brightness(.96);
       transform: translateY(-50%) scale(1.05);
@@ -87,7 +119,7 @@
 
     .reel-carousel-sound {
       position: absolute;
-      z-index: 7;
+      z-index: 9;
       top: 50%;
       left: 50%;
       display: flex;
@@ -140,6 +172,15 @@
     }
 
     @media (max-width: 700px) {
+      .reel-carousel-curtain {
+        top: -10px;
+        right: -10px;
+        bottom: -10px;
+        left: -10px;
+        width: calc(100% + 20px);
+        height: calc(100% + 20px);
+      }
+
       .reel-carousel-frame {
         margin-inline: 34px;
       }
@@ -236,19 +277,26 @@
               allowfullscreen
             ></iframe>
 
+            <img
+              class="reel-carousel-curtain"
+              src="cortina.svg"
+              alt=""
+              aria-hidden="true"
+            >
+
             <button
               class="reel-carousel-arrow reel-carousel-prev"
               id="longVideoPrev"
               type="button"
               aria-label="Vídeo anterior"
-            >‹</button>
+            ><span class="reel-carousel-arrow-icon" aria-hidden="true">‹</span></button>
 
             <button
               class="reel-carousel-arrow reel-carousel-next"
               id="longVideoNext"
               type="button"
               aria-label="Próximo vídeo"
-            >›</button>
+            ><span class="reel-carousel-arrow-icon" aria-hidden="true">›</span></button>
 
             <button
               class="reel-carousel-sound"
