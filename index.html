@@ -23,12 +23,13 @@
   <style id="long-video-carousel-styles">
     .reel-carousel-wrap {
       position: relative;
+      overflow: visible;
     }
 
     .reel-carousel-frame {
       position: relative;
-      overflow: hidden;
-      background: #111;
+      overflow: visible;
+      background: transparent;
       aspect-ratio: 16 / 9;
       min-height: 0;
     }
@@ -39,47 +40,49 @@
       width: 100%;
       height: 100%;
       border: 0;
+      border-radius: 6px;
       background: #111;
     }
 
     .reel-carousel-arrow {
       position: absolute;
-      z-index: 6;
+      z-index: 8;
       top: 50%;
       display: grid;
       place-items: center;
-      width: 48px;
-      height: 64px;
+      width: 52px;
+      height: 52px;
       padding: 0;
       border: 0;
-      border-radius: 999px;
-      background: rgba(255,255,255,.88);
-      color: #111;
-      box-shadow: 0 5px 18px rgba(0,0,0,.16);
+      border-radius: 50%;
+      background: #6bbc0e;
+      color: #fff;
+      box-shadow: 0 5px 16px rgba(0,0,0,.12);
       cursor: pointer;
       font-family: Arial, sans-serif;
-      font-size: 42px;
+      font-size: 38px;
+      font-weight: 400;
       line-height: 1;
       transform: translateY(-50%);
-      transition: transform .16s ease, background .16s ease;
+      transition: transform .16s ease, filter .16s ease;
       -webkit-tap-highlight-color: transparent;
     }
 
     .reel-carousel-arrow:hover {
-      background: #fff;
+      filter: brightness(.96);
       transform: translateY(-50%) scale(1.05);
     }
 
     .reel-carousel-arrow:active {
-      transform: translateY(-50%) scale(.94);
+      transform: translateY(-50%) scale(.93);
     }
 
     .reel-carousel-prev {
-      left: 18px;
+      left: -76px;
     }
 
     .reel-carousel-next {
-      right: 18px;
+      right: -76px;
     }
 
     .reel-carousel-sound {
@@ -126,68 +129,38 @@
       line-height: 1;
     }
 
-    .reel-carousel-meta {
-      position: absolute;
-      z-index: 5;
-      right: 18px;
-      bottom: 16px;
-      left: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      max-width: calc(100% - 36px);
-      pointer-events: none;
-      color: #fff;
-      text-align: left;
-      text-shadow: 0 2px 12px rgba(0,0,0,.75);
-    }
-
-    .reel-carousel-meta strong {
-      overflow: hidden;
-      font-family: "coolvetica", "Coolvetica", Arial, sans-serif;
-      font-size: 17px;
-      font-weight: 400;
-      letter-spacing: .25px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .reel-carousel-meta span {
-      overflow: hidden;
-      font-size: 12px;
-      opacity: .8;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    @media (max-width: 700px) {
-      .reel-carousel-arrow {
-        width: 42px;
-        height: 54px;
-        font-size: 35px;
-      }
-
+    @media (max-width: 1180px) {
       .reel-carousel-prev {
-        left: 10px;
+        left: -28px;
       }
 
       .reel-carousel-next {
-        right: 10px;
+        right: -28px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .reel-carousel-frame {
+        margin-inline: 34px;
+      }
+
+      .reel-carousel-arrow {
+        width: 42px;
+        height: 42px;
+        font-size: 31px;
+      }
+
+      .reel-carousel-prev {
+        left: -30px;
+      }
+
+      .reel-carousel-next {
+        right: -30px;
       }
 
       .reel-carousel-sound {
         min-height: 44px;
         padding: 0 15px;
-        font-size: 14px;
-      }
-
-      .reel-carousel-meta {
-        right: 12px;
-        bottom: 10px;
-        left: 12px;
-      }
-
-      .reel-carousel-meta strong {
         font-size: 14px;
       }
     }
@@ -286,11 +259,6 @@
               <span class="reel-carousel-sound-icon" aria-hidden="true">🔇</span>
               <span>ativar som</span>
             </button>
-
-            <div class="reel-carousel-meta" aria-live="polite">
-              <strong id="longVideoTitle"></strong>
-              <span id="longVideoSubtitle"></span>
-            </div>
           </div>
         </div>
       </section>
@@ -494,8 +462,6 @@
       const prev = document.getElementById('longVideoPrev');
       const next = document.getElementById('longVideoNext');
       const sound = document.getElementById('longVideoSound');
-      const title = document.getElementById('longVideoTitle');
-      const subtitle = document.getElementById('longVideoSubtitle');
 
       if (!carousel || !player || !prev || !next || !sound) return;
 
@@ -598,8 +564,6 @@
         player.src = embed;
         player.title = video.title || 'Vídeo em destaque';
 
-        if (title) title.textContent = video.title || '';
-        if (subtitle) subtitle.textContent = video.subtitle || '';
 
         sound.classList.toggle('is-hidden', soundEnabled);
         sound.setAttribute('aria-hidden', String(soundEnabled));
