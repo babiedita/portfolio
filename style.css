@@ -132,3 +132,237 @@ html.custom-scrollbar-active::-webkit-scrollbar {
   }
 }
 
+
+
+/* =========================================
+   MUSIC PLAYER — MOBILE FIX
+   Ícones CSS (sem emoji) + layout compacto
+========================================= */
+
+/* Esconde os caracteres originais para o sistema não renderizar emoji */
+.music-control,
+.music-mini-control {
+  position: relative;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  color: transparent !important;
+}
+
+/* Base dos ícones */
+.music-control::before,
+.music-control::after,
+.music-mini-control::before,
+.music-mini-control::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+/* PLAY — triângulo */
+#musicPlay::before,
+#musicMiniPlay::before {
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 12px solid #262626;
+  transform: translate(-38%, -50%);
+}
+
+/* PAUSE — duas barras */
+#musicPlay[aria-label*="Pausar"]::before,
+#musicMiniPlay[aria-label*="Pausar"]::before,
+#musicPlay.is-playing::before,
+#musicMiniPlay.is-playing::before {
+  width: 5px;
+  height: 17px;
+  border: 0;
+  background: #262626;
+  transform: translate(-7px, -50%);
+}
+
+#musicPlay[aria-label*="Pausar"]::after,
+#musicMiniPlay[aria-label*="Pausar"]::after,
+#musicPlay.is-playing::after,
+#musicMiniPlay.is-playing::after {
+  width: 5px;
+  height: 17px;
+  background: #262626;
+  transform: translate(3px, -50%);
+}
+
+/* ANTERIOR — barra + triângulo */
+#musicPrev::before,
+#musicMiniPrev::before {
+  width: 3px;
+  height: 16px;
+  background: #262626;
+  transform: translate(-9px, -50%);
+}
+
+#musicPrev::after,
+#musicMiniPrev::after {
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 12px solid #262626;
+  transform: translate(-3px, -50%);
+}
+
+/* PRÓXIMA — triângulo + barra */
+#musicNext::before,
+#musicMiniNext::before {
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 12px solid #262626;
+  transform: translate(-9px, -50%);
+}
+
+#musicNext::after,
+#musicMiniNext::after {
+  width: 3px;
+  height: 16px;
+  background: #262626;
+  transform: translate(7px, -50%);
+}
+
+@media (max-width: 700px) {
+  .music-player {
+    right: 12px !important;
+    left: 12px !important;
+    top: 12px !important;
+
+    width: auto !important;
+    max-width: none !important;
+    min-height: 76px !important;
+
+    display: grid !important;
+    grid-template-columns: 54px minmax(0, 1fr) auto !important;
+    grid-template-areas:
+      "cover info close"
+      "cover controls volume" !important;
+
+    align-items: center !important;
+    column-gap: 10px !important;
+    row-gap: 5px !important;
+
+    padding: 10px 12px !important;
+    border-radius: 22px !important;
+  }
+
+  .music-cover {
+    grid-area: cover !important;
+    width: 54px !important;
+    height: 54px !important;
+    min-width: 54px !important;
+    border-radius: 12px !important;
+    object-fit: cover !important;
+  }
+
+  .music-info {
+    grid-area: info !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .music-now {
+    display: block !important;
+    margin: 0 0 2px !important;
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+    white-space: nowrap !important;
+  }
+
+  .music-title {
+    display: block !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    font-size: 15px !important;
+    line-height: 1.15 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .music-controls {
+    grid-area: controls !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+    min-width: 0 !important;
+  }
+
+  .music-control {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    padding: 0 !important;
+    border-radius: 9px !important;
+  }
+
+  .music-volume-wrap {
+    grid-area: volume !important;
+    width: 92px !important;
+    min-width: 72px !important;
+    margin: 0 !important;
+    justify-self: end !important;
+  }
+
+  .music-volume {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .music-close {
+    grid-area: close !important;
+    position: static !important;
+    justify-self: end !important;
+    align-self: start !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+  }
+
+  .music-player-mini {
+    right: 12px !important;
+    top: 12px !important;
+  }
+
+  .music-mini-control {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+  }
+
+  #musicPlay::before,
+  #musicMiniPlay::before {
+    border-top-width: 7px;
+    border-bottom-width: 7px;
+    border-left-width: 10px;
+  }
+
+  #musicPrev::after,
+  #musicMiniPrev::after {
+    border-top-width: 7px;
+    border-bottom-width: 7px;
+    border-right-width: 10px;
+  }
+
+  #musicNext::before,
+  #musicMiniNext::before {
+    border-top-width: 7px;
+    border-bottom-width: 7px;
+    border-left-width: 10px;
+  }
+}
