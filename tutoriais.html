@@ -5,15 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Tutoriais de edição de vídeo de Bárbara Eichenberg.">
   <title>Tutoriais — Bárbara Eichenberg</title>
+
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="https://use.typekit.net/ndv3lae.css">
   <link rel="stylesheet" href="style.css?v=1601">
   <link rel="stylesheet" href="footer.css?v=4">
+
   <link rel="preload" as="image" href="curtir-1.png">
   <link rel="preload" as="image" href="curtir-2.png">
   <link rel="preload" as="image" href="curtir-3.png">
 </head>
-<body data-page="tutoriais">
+
+<body>
   <div class="site-loader" id="siteLoader">
     <div class="loader-content">
       <video class="loader-video" autoplay muted loop playsinline preload="auto">
@@ -26,31 +29,52 @@
     </div>
   </div>
 
-
-  <!-- BOTÃO CURTIR -->
-  <button class="like-button" id="likeButton" type="button" aria-label="Curtir o portfólio" aria-pressed="false">
+  <button
+    class="like-button"
+    id="likeButton"
+    type="button"
+    aria-label="Curtir o portfólio"
+    aria-pressed="false"
+  >
     <img id="likeButtonImage" src="curtir-1.png" alt="" draggable="false">
   </button>
 
   <div class="music-player" id="musicPlayer">
     <img class="music-cover" id="musicCover" src="covers/miimaker.png" alt="">
+
     <div class="music-info">
       <span class="music-now">Você está ouvindo agora:</span>
       <span class="music-title" id="musicTitle">Mii Maker Editing Mii</span>
     </div>
+
     <div class="music-controls">
       <button class="music-control" id="musicPrev" type="button" aria-label="Música anterior">◀◀</button>
       <button class="music-control music-play" id="musicPlay" type="button" aria-label="Tocar ou pausar">▶</button>
       <button class="music-control" id="musicNext" type="button" aria-label="Próxima música">▶▶</button>
     </div>
+
     <div class="music-volume-wrap" aria-label="Controle de volume">
-      <input class="music-volume" id="musicVolume" type="range" min="0" max="100" value="50" step="1" aria-label="Volume da música">
+      <input
+        class="music-volume"
+        id="musicVolume"
+        type="range"
+        min="0"
+        max="100"
+        value="50"
+        step="1"
+        aria-label="Volume da música"
+      >
     </div>
+
     <button class="music-close" id="musicClose" type="button" aria-label="Minimizar player">×</button>
     <audio id="backgroundAudio" preload="auto"></audio>
   </div>
 
-  <div class="music-player-mini is-hidden" id="musicPlayerMini" aria-label="Player de música minimizado">
+  <div
+    class="music-player-mini is-hidden"
+    id="musicPlayerMini"
+    aria-label="Player de música minimizado"
+  >
     <button class="music-mini-control" id="musicMiniPrev" type="button" aria-label="Música anterior">◀◀</button>
     <button class="music-mini-control music-mini-play" id="musicMiniPlay" type="button" aria-label="Tocar ou pausar">▶</button>
     <button class="music-mini-control" id="musicMiniNext" type="button" aria-label="Próxima música">▶▶</button>
@@ -61,26 +85,31 @@
       <nav aria-label="Navegação principal">
         <a href="index.html#projetos">Projetos</a>
         <a href="index.html#contato">Contato</a>
-        <a href="tutoriais.html" aria-current="page">Tutoriais</a>
+        <a href="tutoriais.html">Tutoriais</a>
         <a href="mural.html">Mural</a>
       </nav>
     </header>
 
     <main>
-      <section class="projects-section tutorials-projects page-width" aria-labelledby="tutorials-title">
-        <div class="section-eyebrow"><span>01 / TUTORIAIS</span></div>
+      <section
+        class="projects-section tutorials-section page-width"
+        id="tutoriais"
+        aria-labelledby="tutorials-title"
+      >
         <div class="projects-heading">
-          <h2 id="tutorials-title">Tutoriais<span class="title-dot">.</span></h2>
+          <h1 id="tutorials-title">Tutoriais<span class="title-dot">.</span></h1>
         </div>
-        <div class="project-grid" id="tutorialGrid"></div>
-        
+
+        <div
+          class="project-grid tutorial-grid is-short-grid"
+          id="tutorialGrid"
+          aria-live="polite"
+        ></div>
       </section>
     </main>
   </div>
 
-
   <footer class="site-footer" id="siteFooter">
-
     <svg
       class="site-footer-wave"
       viewBox="0 0 1440 110"
@@ -92,7 +121,6 @@
         fill="currentColor"
       ></path>
     </svg>
-
 
     <div class="site-footer-body">
       <div class="site-footer-inner page-width">
@@ -108,9 +136,7 @@
           Sugestões
         </a>
 
-        <a href="tutoriais.html">
-          Tutoriais
-        </a>
+        <a href="tutoriais.html">Tutoriais</a>
 
         <a
           href="https://instagram.com/babi.edita/"
@@ -124,14 +150,27 @@
   </footer>
 
   <div class="dialog-backdrop" id="videoDialog" aria-hidden="true">
-    <div class="dialog-panel video-dialog" role="dialog" aria-modal="true" aria-labelledby="videoDialogTitle">
+    <div
+      class="dialog-panel video-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="videoDialogTitle"
+    >
       <button class="dialog-close" data-close="videoDialog" aria-label="Fechar">×</button>
       <h3 id="videoDialogTitle"></h3>
-      <iframe id="youtubePlayer" title="Player do YouTube" src="" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+
+      <iframe
+        id="youtubePlayer"
+        title="Player do YouTube"
+        src=""
+        allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+        allowfullscreen
+      ></iframe>
     </div>
   </div>
 
   <script src="script.js?v=1400"></script>
+  <script src="preview-autoplay.js?v=1"></script>
   <script src="footer.js?v=3"></script>
 </body>
 </html>
