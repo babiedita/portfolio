@@ -826,3 +826,18 @@ html.custom-scrollbar-active::-webkit-scrollbar {
     justify-content: flex-start !important;
   }
 }
+
+
+/* =========================================
+   PLAYER MINIMIZADO — FIX FINAL
+========================================= */
+
+/* Os overrides responsivos usam display com !important.
+   Essas regras precisam vir por último para o estado hidden vencer. */
+.music-player.is-hidden {
+  display: none !important;
+}
+
+.music-player-mini.is-hidden {
+  display: none !important;
+}
